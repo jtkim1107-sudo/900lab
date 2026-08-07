@@ -1,0 +1,730 @@
+<title>900LAB — 재고 소진몰 프로토타입</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+/* ============================================================
+   900LAB 프로토타입 — 단일 라이트 테마(가격표 스티커 컨셉)로 확정.
+   카페24 이식 시: 아래 토큰을 스킨 공통 CSS로, 각 섹션 주석의
+   모듈 위치에 카페24 모듈 코드를 심으면 됩니다.
+   ============================================================ */
+:root{
+  --paper:#F7F6F2;
+  --card:#FFFFFF;
+  --ink:#1C1A17;
+  --muted:#7C766B;
+  --line:#E5E1D8;
+  --tag:#FFD23F;        /* 900원관 · 브랜드 하이라이트 */
+  --tag-deep:#F0B400;
+  --punch:#E5472D;      /* 품절임박 · 게이지 미달성 */
+  --go:#178A50;         /* 무료배송 달성 */
+  --go-soft:#E3F2E9;
+  --radius:10px;
+  --font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--font);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.5;
+  padding-bottom:96px; /* 하단 고정 게이지 공간 */
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--tag-deep);outline-offset:2px}
+input{font-family:inherit}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- 헤더 (카페24: 공통 상단 레이아웃) ---------- */
+header{
+  position:sticky;top:0;z-index:40;
+  background:var(--paper);
+  border-bottom:2px solid var(--ink);
+}
+.head-in{
+  max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;
+}
+.brand{display:flex;align-items:baseline;gap:10px;flex:1;min-width:0}
+.brand-mark{
+  font-size:24px;font-weight:900;letter-spacing:-0.5px;white-space:nowrap;
+}
+.brand-mark em{
+  font-style:normal;
+  background:var(--tag);
+  padding:1px 7px 2px;border-radius:4px;
+  box-shadow:2px 2px 0 var(--ink);
+}
+.brand-tag{
+  font-size:12px;color:var(--muted);letter-spacing:0.02em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.demo-pill{
+  font-size:11px;font-weight:700;letter-spacing:0.06em;
+  border:1.5px dashed var(--punch);color:var(--punch);
+  border-radius:99px;padding:3px 10px;white-space:nowrap;
+}
+.cart-btn{
+  position:relative;
+  display:flex;align-items:center;gap:8px;
+  background:var(--ink);color:var(--paper);
+  font-weight:800;font-size:14px;
+  padding:9px 16px;border-radius:99px;
+}
+.cart-count{
+  background:var(--tag);color:var(--ink);
+  font-size:12px;font-weight:900;
+  min-width:22px;height:22px;border-radius:99px;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ---------- 전체 소진율 스트립 ---------- */
+.burn{
+  background:var(--ink);color:var(--paper);
+}
+.burn-in{
+  max-width:1080px;margin:0 auto;
+  padding:10px 16px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.burn-label{font-size:13px;font-weight:700;letter-spacing:0.03em;white-space:nowrap}
+.burn-label strong{color:var(--tag)}
+.burn-track{
+  flex:1;min-width:140px;height:10px;border-radius:99px;
+  background:rgba(247,246,242,0.22);overflow:hidden;
+}
+.burn-fill{
+  height:100%;border-radius:99px;background:var(--tag);
+  transition:width .6s ease;
+}
+.burn-pct{font-size:13px;font-weight:900;color:var(--tag);white-space:nowrap}
+
+/* ---------- 히어로 문구 ---------- */
+.hero{
+  max-width:1080px;margin:0 auto;
+  padding:34px 16px 8px;
+}
+.hero h1{
+  font-size:clamp(24px,4.5vw,38px);
+  font-weight:900;letter-spacing:-0.8px;line-height:1.25;
+  text-wrap:balance;
+}
+.hero h1 .u9{box-shadow:inset 0 -0.45em var(--tag)}
+.hero p{margin-top:8px;color:var(--muted);font-size:14px;max-width:34em}
+.hero p b{color:var(--ink)}
+
+/* ---------- 필터 탭 (카페24: 상품분류 커스텀) ---------- */
+.tabs{
+  position:sticky;top:57px;z-index:30;
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
+}
+.tabs-in{
+  max-width:1080px;margin:0 auto;
+  display:flex;gap:8px;padding:12px 16px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.tabs-in::-webkit-scrollbar{display:none}
+.tab{
+  font-size:13px;font-weight:700;white-space:nowrap;
+  padding:7px 14px;border-radius:99px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--muted);
+}
+.tab[aria-pressed="true"]{
+  background:var(--ink);border-color:var(--ink);color:var(--paper);
+}
+.tab .cnt{font-weight:900;margin-left:4px}
+.tab-hot[aria-pressed="true"]{background:var(--punch);border-color:var(--punch)}
+
+/* ---------- 상품 그리드 (카페24: product/list 모듈 위치) ---------- */
+.grid-wrap{max-width:1080px;margin:0 auto;padding:18px 16px 40px}
+.grid{
+  display:grid;gap:14px;
+  grid-template-columns:repeat(auto-fill,minmax(168px,1fr));
+}
+.card{
+  background:var(--card);
+  border:1.5px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  position:relative;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(28,26,23,0.08)}
+.thumb{
+  aspect-ratio:1/1;
+  display:flex;align-items:center;justify-content:center;
+  font-size:52px;
+  border-bottom:1.5px solid var(--line);
+  user-select:none;
+}
+.price-sticker{
+  position:absolute;top:10px;left:10px;
+  font-size:13px;font-weight:900;letter-spacing:-0.2px;
+  background:var(--tag);color:var(--ink);
+  padding:3px 9px;border-radius:4px;
+  box-shadow:2px 2px 0 var(--ink);
+}
+.price-sticker.p1900{background:var(--card);border:1.5px solid var(--ink)}
+.low-flag{
+  position:absolute;top:10px;right:10px;
+  font-size:11px;font-weight:800;
+  background:var(--punch);color:#fff;
+  padding:3px 8px;border-radius:99px;
+}
+.card-body{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1}
+.p-name{font-size:13.5px;font-weight:600;line-height:1.35;flex:1}
+.p-meta{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.p-price{font-size:17px;font-weight:900;letter-spacing:-0.3px}
+.p-stock{font-size:12px;color:var(--muted)}
+.p-stock.low{color:var(--punch);font-weight:700}
+.add-btn{
+  background:var(--ink);color:var(--paper);
+  font-size:13.5px;font-weight:800;
+  padding:9px 0;border-radius:8px;
+  transition:background .12s ease;
+}
+.add-btn:hover{background:#3a362f}
+.stepper{
+  display:flex;align-items:center;
+  border:1.5px solid var(--ink);border-radius:8px;overflow:hidden;
+}
+.stepper button{
+  flex:0 0 40px;padding:8px 0;font-size:16px;font-weight:900;
+  background:var(--ink);color:var(--paper);
+}
+.stepper button:disabled{opacity:0.35;cursor:default}
+.stepper .qty{flex:1;text-align:center;font-weight:900;font-size:15px}
+.card.soldout .thumb,.card.soldout .card-body{opacity:0.42}
+.soldout-stamp{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-8deg);
+  font-size:20px;font-weight:900;letter-spacing:0.12em;
+  color:var(--punch);
+  border:3px solid var(--punch);border-radius:6px;
+  padding:4px 14px;background:rgba(255,255,255,0.85);
+  pointer-events:none;
+}
+.empty-msg{color:var(--muted);font-size:14px;padding:40px 0;text-align:center;grid-column:1/-1}
+
+/* ---------- 하단 고정 무료배송 게이지 ---------- */
+.gauge{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  background:var(--card);
+  border-top:2px solid var(--ink);
+  box-shadow:0 -6px 20px rgba(28,26,23,0.10);
+}
+.gauge-in{
+  max-width:1080px;margin:0 auto;
+  padding:12px 16px;
+  display:flex;align-items:center;gap:14px;
+}
+.gauge-info{flex:1;min-width:0}
+.gauge-msg{font-size:13.5px;font-weight:700;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gauge-msg .amt{color:var(--punch);font-weight:900}
+.gauge-msg.done{color:var(--go)}
+.gauge-track{height:8px;border-radius:99px;background:var(--paper);border:1px solid var(--line);overflow:hidden}
+.gauge-fill{height:100%;border-radius:99px;background:var(--punch);transition:width .3s ease,background .3s ease}
+.gauge-fill.done{background:var(--go)}
+.gauge-open{
+  background:var(--tag);color:var(--ink);
+  font-size:14px;font-weight:900;letter-spacing:-0.2px;
+  padding:11px 18px;border-radius:10px;
+  box-shadow:2px 2px 0 var(--ink);
+  white-space:nowrap;
+}
+
+/* ---------- 장바구니 드로어 (카페24: order/basket 커스텀) ---------- */
+.scrim{
+  position:fixed;inset:0;z-index:60;
+  background:rgba(28,26,23,0.45);
+  opacity:0;pointer-events:none;transition:opacity .2s ease;
+}
+.scrim.show{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;z-index:70;
+  width:min(400px,100vw);
+  background:var(--paper);
+  border-left:2px solid var(--ink);
+  transform:translateX(102%);transition:transform .25s ease;
+  display:flex;flex-direction:column;
+}
+.drawer.show{transform:translateX(0)}
+.drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px;border-bottom:2px solid var(--ink);
+}
+.drawer-head h2{font-size:17px;font-weight:900}
+.drawer-close{font-size:22px;font-weight:900;padding:2px 8px}
+.drawer-list{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+.cart-row{
+  display:flex;align-items:center;gap:10px;
+  background:var(--card);border:1.5px solid var(--line);border-radius:10px;
+  padding:10px;
+}
+.cart-emoji{font-size:26px;flex:0 0 auto}
+.cart-info{flex:1;min-width:0}
+.cart-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-price{font-size:12.5px;color:var(--muted)}
+.mini-step{display:flex;align-items:center;gap:0;border:1.5px solid var(--ink);border-radius:7px;overflow:hidden}
+.mini-step button{width:28px;padding:4px 0;font-weight:900;background:var(--ink);color:var(--paper);font-size:14px}
+.mini-step button:disabled{opacity:0.35;cursor:default}
+.mini-step .q{width:32px;text-align:center;font-weight:900;font-size:13.5px}
+.cart-empty{color:var(--muted);font-size:14px;text-align:center;padding:48px 0}
+.drawer-foot{border-top:2px solid var(--ink);padding:14px 16px;background:var(--card)}
+.sum-row{display:flex;justify-content:space-between;font-size:13.5px;padding:3px 0;color:var(--muted)}
+.sum-row b{color:var(--ink)}
+.sum-row.total{font-size:16px;font-weight:900;color:var(--ink);padding-top:8px;margin-top:6px;border-top:1.5px dashed var(--line)}
+.sum-row .free{color:var(--go);font-weight:900}
+.ship-hint{
+  margin-top:8px;font-size:12.5px;font-weight:700;
+  background:var(--paper);border:1.5px dashed var(--punch);color:var(--punch);
+  border-radius:8px;padding:8px 10px;text-align:center;
+}
+.ship-hint.ok{border-color:var(--go);color:var(--go);background:var(--go-soft)}
+.checkout-btn{
+  width:100%;margin-top:12px;
+  background:var(--punch);color:#fff;
+  font-size:15.5px;font-weight:900;letter-spacing:-0.2px;
+  padding:14px 0;border-radius:10px;
+}
+.checkout-btn:disabled{background:var(--line);color:var(--muted);cursor:default}
+
+/* ---------- 주문 모달 (시연용 · 카페24에서는 기본 주문서로 대체) ---------- */
+.modal{
+  position:fixed;inset:0;z-index:80;
+  display:none;align-items:flex-end;justify-content:center;
+  background:rgba(28,26,23,0.5);
+  padding:0;
+}
+.modal.show{display:flex}
+.modal-box{
+  width:min(460px,100vw);max-height:92vh;overflow-y:auto;
+  background:var(--paper);
+  border:2px solid var(--ink);border-bottom:none;
+  border-radius:16px 16px 0 0;
+  padding:20px 18px 26px;
+}
+@media(min-width:520px){
+  .modal{align-items:center;padding:20px}
+  .modal-box{border-radius:16px;border-bottom:2px solid var(--ink)}
+}
+.modal-box h2{font-size:18px;font-weight:900;margin-bottom:4px}
+.modal-sub{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12.5px;font-weight:800;letter-spacing:0.04em;margin-bottom:5px}
+.field input{
+  width:100%;padding:11px 12px;font-size:14.5px;
+  border:1.5px solid var(--line);border-radius:8px;
+  background:var(--card);color:var(--ink);
+}
+.field input:focus{border-color:var(--ink)}
+.pay-opts{display:flex;gap:8px;margin-bottom:16px}
+.pay-opt{flex:1}
+.pay-opt input{position:absolute;opacity:0;pointer-events:none}
+.pay-opt span{
+  display:block;text-align:center;font-size:13px;font-weight:700;
+  border:1.5px solid var(--line);border-radius:8px;padding:10px 0;
+  background:var(--card);color:var(--muted);
+}
+.pay-opt input:checked + span{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.pay-opt input:focus-visible + span{outline:3px solid var(--tag-deep);outline-offset:2px}
+.order-btn{
+  width:100%;background:var(--ink);color:var(--paper);
+  font-size:15.5px;font-weight:900;padding:14px 0;border-radius:10px;
+}
+.modal-cancel{width:100%;margin-top:8px;font-size:13px;color:var(--muted);padding:8px 0;text-decoration:underline}
+
+/* 완료 화면 */
+.done-box{text-align:center;padding:8px 0}
+.done-emoji{font-size:44px}
+.done-box h2{margin:10px 0 6px}
+.done-no{
+  display:inline-block;margin:6px 0 14px;
+  font-weight:900;font-size:14px;letter-spacing:0.05em;
+  background:var(--tag);padding:4px 12px;border-radius:5px;
+  box-shadow:2px 2px 0 var(--ink);
+}
+.done-note{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+
+/* 토스트 */
+.toast{
+  position:fixed;left:50%;bottom:104px;z-index:90;
+  transform:translateX(-50%) translateY(16px);
+  background:var(--ink);color:var(--paper);
+  font-size:13.5px;font-weight:700;
+  padding:10px 18px;border-radius:99px;
+  opacity:0;pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;
+  white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .amt{color:var(--tag);font-weight:900}
+
+footer{
+  max-width:1080px;margin:0 auto;
+  padding:24px 16px 40px;
+  font-size:12px;color:var(--muted);line-height:1.7;
+  border-top:1px solid var(--line);
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+
+<!-- ================= 헤더 ================= -->
+<header>
+  <div class="head-in">
+    <div class="brand">
+      <div class="brand-mark">9<em>00</em>LAB</div>
+      <div class="brand-tag">전부 900원 · 1,900원, 소진되면 끝</div>
+    </div>
+    <span class="demo-pill">시연용 프로토타입</span>
+    <button class="cart-btn" id="cartOpenBtn" aria-label="장바구니 열기">
+      장바구니 <span class="cart-count num" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- ================= 전체 소진율 ================= -->
+<div class="burn" role="status">
+  <div class="burn-in">
+    <span class="burn-label">전체 재고 <strong class="num" id="burnTotal">12,400</strong>개 중 <strong class="num" id="burnSold">0</strong>개 소진</span>
+    <div class="burn-track" aria-hidden="true"><div class="burn-fill" id="burnFill" style="width:0%"></div></div>
+    <span class="burn-pct num" id="burnPct">0%</span>
+  </div>
+</div>
+
+<!-- ================= 히어로 ================= -->
+<section class="hero">
+  <h1>원가에 폭탄 정리,<br><span class="u9">전 상품 900원 · 1,900원</span></h1>
+  <p><b>9,800원 이상 무료배송.</b> 재입고는 없습니다 — 지금 보이는 수량이 마지막 수량이에요.</p>
+</section>
+
+<!-- ================= 필터 탭 ================= -->
+<nav class="tabs" aria-label="상품 필터">
+  <div class="tabs-in" id="tabBar"></div>
+</nav>
+
+<!-- ================= 상품 그리드 (카페24: product/list) ================= -->
+<main class="grid-wrap">
+  <div class="grid" id="grid"></div>
+</main>
+
+<!-- ================= 하단 고정 무료배송 게이지 ================= -->
+<div class="gauge">
+  <div class="gauge-in">
+    <div class="gauge-info">
+      <div class="gauge-msg" id="gaugeMsg">담기 시작하면 무료배송 게이지가 차올라요</div>
+      <div class="gauge-track" aria-hidden="true"><div class="gauge-fill" id="gaugeFill" style="width:0%"></div></div>
+    </div>
+    <button class="gauge-open num" id="gaugeOpenBtn" aria-label="장바구니 보기">0원 · 보기</button>
+  </div>
+</div>
+
+<!-- ================= 장바구니 드로어 ================= -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="장바구니">
+  <div class="drawer-head">
+    <h2>장바구니</h2>
+    <button class="drawer-close" id="drawerClose" aria-label="닫기">×</button>
+  </div>
+  <div class="drawer-list" id="cartList"></div>
+  <div class="drawer-foot">
+    <div class="sum-row"><span>상품 금액</span><b class="num" id="sumItems">0원</b></div>
+    <div class="sum-row"><span>배송비</span><b class="num" id="sumShip">0원</b></div>
+    <div class="sum-row total"><span>합계</span><span class="num" id="sumTotal">0원</span></div>
+    <div class="ship-hint" id="shipHint">9,800원 이상 담으면 배송비 3,500원이 무료!</div>
+    <button class="checkout-btn" id="checkoutBtn" disabled>주문하기</button>
+  </div>
+</aside>
+
+<!-- ================= 주문 모달 (시연) ================= -->
+<div class="modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+  <div class="modal-box" id="orderFormBox">
+    <h2 id="orderTitle">주문하기</h2>
+    <p class="modal-sub">시연용 주문서입니다 — 실제 결제는 발생하지 않아요. 카페24 이식 시 기본 주문서·PG 결제로 대체됩니다.</p>
+    <form id="orderForm">
+      <div class="field"><label for="fName">받는 분</label><input id="fName" required placeholder="홍길동" autocomplete="name"></div>
+      <div class="field"><label for="fPhone">연락처</label><input id="fPhone" required placeholder="010-0000-0000" inputmode="tel" autocomplete="tel"></div>
+      <div class="field"><label for="fAddr">주소</label><input id="fAddr" required placeholder="서울시 ○○구 ○○로 00" autocomplete="street-address"></div>
+      <div class="pay-opts" role="radiogroup" aria-label="결제수단">
+        <label class="pay-opt"><input type="radio" name="pay" value="card" checked><span>카드</span></label>
+        <label class="pay-opt"><input type="radio" name="pay" value="easy"><span>간편결제</span></label>
+        <label class="pay-opt"><input type="radio" name="pay" value="vbank"><span>가상계좌</span></label>
+      </div>
+      <button type="submit" class="order-btn num" id="orderSubmit">결제하기 (시연)</button>
+      <button type="button" class="modal-cancel" id="orderCancel">돌아가기</button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= 완료 모달 ================= -->
+<div class="modal" id="doneModal" role="dialog" aria-modal="true" aria-labelledby="doneTitle">
+  <div class="modal-box done-box">
+    <div class="done-emoji">📦</div>
+    <h2 id="doneTitle">주문 완료! (시연)</h2>
+    <div class="done-no num" id="doneNo">900LAB-DEMO-0001</div>
+    <p class="done-note">재고가 실시간 차감됐어요. 실제 결제·배송은 발생하지 않는 시연 주문입니다.</p>
+    <button class="order-btn" id="doneClose">쇼핑 계속하기</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<footer>
+  900LAB 프로토타입 · 리파코 장기체화재고 소진 프로젝트<br>
+  900원/1,900원 균일가 · 9,800원 이상 무료배송(미만 3,500원) · 재입고 없음<br>
+  본 페이지는 시연용이며 상품·재고·주문은 모두 데모 데이터입니다.
+</footer>
+
+<script>
+/* ============ 데모 데이터 (카페24 이식 시 상품 DB로 대체) ============ */
+const FREE_SHIP = 9800, SHIP_FEE = 3500;
+const TOTAL_INV = 12400, SOLD_BASE = 7132;
+
+const PRODUCTS = [
+  {id:1, name:"주방 수세미 3입 (양면)",        price:900,  stock:143, emoji:"🧽", hue:"#FFF3D6"},
+  {id:2, name:"극세사 행주 2매",               price:900,  stock:87,  emoji:"🧻", hue:"#E8F1FA"},
+  {id:3, name:"볼펜 0.5mm 3자루 (흑)",         price:900,  stock:210, emoji:"🖊️", hue:"#EFEAF8"},
+  {id:4, name:"스텐 티스푼 2P",                price:900,  stock:9,   emoji:"🥄", hue:"#EDEDED"},
+  {id:5, name:"다용도 집게 4P",                price:900,  stock:64,  emoji:"🗜️", hue:"#FDEAE4"},
+  {id:6, name:"욕실 청소 스펀지",              price:900,  stock:38,  emoji:"🫧", hue:"#E4F4F1"},
+  {id:7, name:"지퍼백 소형 30매",              price:900,  stock:176, emoji:"🛍️", hue:"#F4F0E4"},
+  {id:8, name:"점착 메모패드 3권",             price:900,  stock:0,   emoji:"📒", hue:"#FFF8D9"},
+  {id:9, name:"세탁망 소형 (원형)",            price:900,  stock:52,  emoji:"🧺", hue:"#EAF3E6"},
+  {id:10,name:"케이블타이 100P",               price:900,  stock:7,   emoji:"🪢", hue:"#F0EDE6"},
+  {id:11,name:"위생 면봉 300입",               price:900,  stock:95,  emoji:"🤍", hue:"#F7EDF2"},
+  {id:12,name:"칫솔 캡 4P",                    price:900,  stock:0,   emoji:"🪥", hue:"#E6F0F7"},
+  {id:13,name:"밀폐용기 500ml 2P",             price:1900, stock:46,  emoji:"🫙", hue:"#EDF5EC"},
+  {id:14,name:"스텐 주방가위",                 price:1900, stock:31,  emoji:"✂️", hue:"#ECECF2"},
+  {id:15,name:"극세사 핸드타월 2P",            price:1900, stock:8,   emoji:"🧣", hue:"#FBEDE7"},
+  {id:16,name:"주방 고무장갑 (M)",             price:1900, stock:73,  emoji:"🧤", hue:"#FDF1DC"},
+  {id:17,name:"다용도 정리 트레이",            price:1900, stock:29,  emoji:"🗂️", hue:"#EAF0F6"},
+  {id:18,name:"마스킹테이프 5롤 세트",         price:1900, stock:55,  emoji:"🎨", hue:"#F5ECF6"},
+  {id:19,name:"샤워타월 (롱)",                 price:1900, stock:0,   emoji:"🚿", hue:"#E5F2F4"},
+  {id:20,name:"미니 빗자루+쓰레받기",          price:1900, stock:17,  emoji:"🧹", hue:"#F3EFE3"},
+  {id:21,name:"텀블러 세척 브러시",            price:1900, stock:6,   emoji:"🍶", hue:"#E9F3EE"},
+  {id:22,name:"A5 무지 노트 3권",              price:1900, stock:81,  emoji:"📘", hue:"#E9EEF8"},
+  {id:23,name:"부착식 후크걸이 10P",           price:1900, stock:42,  emoji:"🪝", hue:"#F1EDE9"},
+  {id:24,name:"규조토 발매트",                 price:1900, stock:12,  emoji:"🦶", hue:"#EFEBE2"},
+];
+
+/* ============ 상태 ============ */
+const cart = new Map();        // id -> qty
+let demoSold = 0;              // 시연 중 판매 수량
+let filter = "all";
+let orderSeq = 0;
+
+const $ = id => document.getElementById(id);
+const won = n => n.toLocaleString("ko-KR") + "원";
+const byId = id => PRODUCTS.find(p => p.id === id);
+const avail = p => p.stock - (cart.get(p.id) || 0);
+
+/* ============ 필터 탭 ============ */
+const TABS = [
+  {key:"all",  label:"전체"},
+  {key:"p900", label:"900원관"},
+  {key:"p1900",label:"1,900원관"},
+  {key:"low",  label:"품절임박", hot:true},
+];
+function matches(p,key){
+  if(key==="p900")  return p.price===900;
+  if(key==="p1900") return p.price===1900;
+  if(key==="low")   return p.stock>0 && p.stock<10;
+  return true;
+}
+function renderTabs(){
+  $("tabBar").innerHTML = TABS.map(t=>{
+    const n = PRODUCTS.filter(p=>matches(p,t.key)).length;
+    return `<button class="tab ${t.hot?"tab-hot":""}" data-key="${t.key}"
+      aria-pressed="${filter===t.key}">${t.label}<span class="cnt num">${n}</span></button>`;
+  }).join("");
+}
+$("tabBar").addEventListener("click",e=>{
+  const b=e.target.closest(".tab"); if(!b) return;
+  filter=b.dataset.key; renderTabs(); renderGrid();
+});
+
+/* ============ 상품 그리드 ============ */
+function cardHTML(p){
+  const q = cart.get(p.id)||0;
+  const out = p.stock===0;
+  const low = !out && p.stock<10;
+  const ctrl = out ? "" : q===0
+    ? `<button class="add-btn" data-add="${p.id}">담기 +</button>`
+    : `<div class="stepper">
+         <button data-dec="${p.id}" aria-label="빼기">−</button>
+         <span class="qty num">${q}</span>
+         <button data-inc="${p.id}" aria-label="더 담기" ${avail(p)<=0?"disabled":""}>+</button>
+       </div>`;
+  return `<article class="card ${out?"soldout":""}">
+    <div class="thumb" style="background:${p.hue}">${p.emoji}</div>
+    <span class="price-sticker num ${p.price===1900?"p1900":""}">${p.price.toLocaleString()}원</span>
+    ${low?`<span class="low-flag num">품절임박 ${p.stock}</span>`:""}
+    ${out?`<span class="soldout-stamp">SOLD OUT</span>`:""}
+    <div class="card-body">
+      <div class="p-name">${p.name}</div>
+      <div class="p-meta">
+        <span class="p-price num">${won(p.price)}</span>
+        <span class="p-stock num ${low?"low":""}">${out?"소진 완료":"남은 수량 "+p.stock}</span>
+      </div>
+      ${ctrl}
+    </div>
+  </article>`;
+}
+function renderGrid(){
+  const list = PRODUCTS.filter(p=>matches(p,filter));
+  $("grid").innerHTML = list.length
+    ? list.map(cardHTML).join("")
+    : `<p class="empty-msg">이 조건의 상품이 다 털렸어요 🎉</p>`;
+}
+$("grid").addEventListener("click",e=>{
+  const add=e.target.closest("[data-add]"), inc=e.target.closest("[data-inc]"), dec=e.target.closest("[data-dec]");
+  if(add) changeQty(+add.dataset.add, +1, true);
+  else if(inc) changeQty(+inc.dataset.inc, +1, true);
+  else if(dec) changeQty(+dec.dataset.dec, -1);
+});
+
+/* ============ 장바구니 로직 ============ */
+function changeQty(id, delta, toastOn){
+  const p = byId(id);
+  const cur = cart.get(id)||0;
+  const next = cur + delta;
+  if(delta>0 && avail(p)<=0) return;
+  if(next<=0) cart.delete(id); else cart.set(id,next);
+  renderAll();
+  if(toastOn) showToast();
+}
+function subtotal(){
+  let s=0; for(const [id,q] of cart) s += byId(id).price*q; return s;
+}
+function itemCount(){
+  let n=0; for(const q of cart.values()) n+=q; return n;
+}
+function renderCart(){
+  const rows=[];
+  for(const [id,q] of cart){
+    const p=byId(id);
+    rows.push(`<div class="cart-row">
+      <span class="cart-emoji">${p.emoji}</span>
+      <div class="cart-info">
+        <div class="cart-name">${p.name}</div>
+        <div class="cart-price num">${won(p.price)} × ${q} = ${won(p.price*q)}</div>
+      </div>
+      <div class="mini-step">
+        <button data-cdec="${id}" aria-label="빼기">−</button>
+        <span class="q num">${q}</span>
+        <button data-cinc="${id}" aria-label="더 담기" ${avail(p)<=0?"disabled":""}>+</button>
+      </div>
+    </div>`);
+  }
+  $("cartList").innerHTML = rows.length? rows.join("")
+    : `<p class="cart-empty">아직 비어 있어요.<br>900원부터 담아보세요!</p>`;
+
+  const sub=subtotal();
+  const ship = sub===0?0 : (sub>=FREE_SHIP?0:SHIP_FEE);
+  $("sumItems").textContent = won(sub);
+  $("sumShip").innerHTML = sub>=FREE_SHIP && sub>0 ? `<span class="free">무료!</span>` : won(ship);
+  $("sumTotal").textContent = won(sub+ship);
+
+  const hint=$("shipHint");
+  if(sub===0){ hint.className="ship-hint"; hint.textContent=`9,800원 이상 담으면 배송비 ${won(SHIP_FEE)}이 무료!`; }
+  else if(sub>=FREE_SHIP){ hint.className="ship-hint ok"; hint.textContent="무료배송 달성! 🎉"; }
+  else{
+    const remain=FREE_SHIP-sub, n=Math.ceil(remain/900);
+    hint.className="ship-hint";
+    hint.innerHTML=`무료배송까지 <b class="num">${won(remain)}</b> — 900원 상품 ${n}개면 충분해요`;
+  }
+  $("checkoutBtn").disabled = sub===0;
+  $("checkoutBtn").textContent = sub===0?"주문하기":`${won(sub+ship)} 주문하기`;
+}
+
+/* ============ 게이지 · 헤더 카운트 ============ */
+function renderGauge(){
+  const sub=subtotal();
+  const pct=Math.min(100, sub/FREE_SHIP*100);
+  const fill=$("gaugeFill"), msg=$("gaugeMsg");
+  fill.style.width=pct+"%";
+  fill.classList.toggle("done", sub>=FREE_SHIP);
+  msg.classList.toggle("done", sub>=FREE_SHIP);
+  if(sub===0) msg.textContent="담기 시작하면 무료배송 게이지가 차올라요";
+  else if(sub>=FREE_SHIP) msg.textContent="무료배송 달성! 배송비 0원 🎉";
+  else{
+    const remain=FREE_SHIP-sub, n=Math.ceil(remain/900);
+    msg.innerHTML=`무료배송까지 <span class="amt num">${won(remain)}</span> 남았어요 — 900원 ${n}개 더!`;
+  }
+  $("gaugeOpenBtn").textContent = `${won(sub)} · 보기`;
+  $("cartCount").textContent = itemCount();
+}
+
+/* ============ 소진율 배너 ============ */
+function renderBurn(){
+  const sold=SOLD_BASE+demoSold;
+  const pct=(sold/TOTAL_INV*100);
+  $("burnSold").textContent=sold.toLocaleString();
+  $("burnTotal").textContent=TOTAL_INV.toLocaleString();
+  $("burnFill").style.width=pct.toFixed(1)+"%";
+  $("burnPct").textContent=pct.toFixed(1)+"%";
+}
+
+function renderAll(){ renderGrid(); renderCart(); renderGauge(); renderBurn(); }
+
+/* ============ 드로어 · 모달 ============ */
+function openDrawer(){ $("drawer").classList.add("show"); $("scrim").classList.add("show"); }
+function closeDrawer(){ $("drawer").classList.remove("show"); $("scrim").classList.remove("show"); }
+$("cartOpenBtn").onclick=openDrawer;
+$("gaugeOpenBtn").onclick=openDrawer;
+$("drawerClose").onclick=closeDrawer;
+$("scrim").onclick=closeDrawer;
+
+$("cartList").addEventListener("click",e=>{
+  const inc=e.target.closest("[data-cinc]"), dec=e.target.closest("[data-cdec]");
+  if(inc) changeQty(+inc.dataset.cinc,+1);
+  else if(dec) changeQty(+dec.dataset.cdec,-1);
+});
+
+$("checkoutBtn").onclick=()=>{
+  closeDrawer();
+  $("orderModal").classList.add("show");
+  const sub=subtotal(), ship=sub>=FREE_SHIP?0:SHIP_FEE;
+  $("orderSubmit").textContent=`${won(sub+ship)} 결제하기 (시연)`;
+  $("fName").focus();
+};
+$("orderCancel").onclick=()=>{ $("orderModal").classList.remove("show"); openDrawer(); };
+
+$("orderForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  // 재고 차감 + 판매량 반영
+  for(const [id,q] of cart){ const p=byId(id); p.stock=Math.max(0,p.stock-q); demoSold+=q; }
+  orderSeq++;
+  $("doneNo").textContent=`900LAB-DEMO-${String(orderSeq).padStart(4,"0")}`;
+  cart.clear();
+  $("orderModal").classList.remove("show");
+  $("orderForm").reset();
+  $("doneModal").classList.add("show");
+  renderAll();
+});
+$("doneClose").onclick=()=>$("doneModal").classList.remove("show");
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){ closeDrawer(); $("orderModal").classList.remove("show"); $("doneModal").classList.remove("show"); }
+});
+
+/* ============ 토스트 ============ */
+let toastTimer=null;
+function showToast(){
+  const sub=subtotal(), t=$("toast");
+  t.innerHTML = sub>=FREE_SHIP
+    ? `담았어요! <span class="amt">무료배송 달성 🎉</span>`
+    : `담았어요! 무료배송까지 <span class="amt num">${won(FREE_SHIP-sub)}</span>`;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove("show"),1600);
+}
+
+/* ============ 시작 ============ */
+renderTabs(); renderAll();
+</script>
