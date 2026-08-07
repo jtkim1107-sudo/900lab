@@ -3,22 +3,25 @@
 
 <style>
 /* ============================================================
-   900LAB 프로토타입 — 단일 라이트 테마(가격표 스티커 컨셉)로 확정.
-   카페24 이식 시: 아래 토큰을 스킨 공통 CSS로, 각 섹션 주석의
+   900LAB 프로토타입 — 단일 라이트 테마(창고 정리 세일 / 가격표 스티커).
+   카페24 이식 시: 토큰을 스킨 공통 CSS로, 각 섹션 주석의
    모듈 위치에 카페24 모듈 코드를 심으면 됩니다.
    ============================================================ */
 :root{
-  --paper:#F7F6F2;
+  --paper:#F6F4EE;
   --card:#FFFFFF;
-  --ink:#1C1A17;
+  --ink:#191713;
   --muted:#7C766B;
-  --line:#E5E1D8;
-  --tag:#FFD23F;        /* 900원관 · 브랜드 하이라이트 */
-  --tag-deep:#F0B400;
-  --punch:#E5472D;      /* 품절임박 · 게이지 미달성 */
+  --line:#E3DFD4;
+  --tag:#FFD23F;        /* 브랜드 옐로 · 900원관 */
+  --tag-deep:#E9B914;
+  --punch:#E5472D;      /* 어전시 · 품절임박 */
+  --punch-deep:#C93A24;
   --go:#178A50;         /* 무료배송 달성 */
   --go-soft:#E3F2E9;
-  --radius:10px;
+  --radius:12px;
+  --hard:3px 3px 0 var(--ink);
+  --hard-s:2px 2px 0 var(--ink);
   --font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -28,7 +31,7 @@ body{
   background:var(--paper);
   color:var(--ink);
   line-height:1.5;
-  padding-bottom:96px; /* 하단 고정 게이지 공간 */
+  padding-bottom:100px; /* 하단 고정 게이지 공간 */
 }
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--tag-deep);outline-offset:2px}
@@ -44,17 +47,18 @@ header{
 .head-in{
   max-width:1080px;margin:0 auto;
   display:flex;align-items:center;gap:12px;
-  padding:14px 16px;
+  padding:13px 16px;
 }
 .brand{display:flex;align-items:baseline;gap:10px;flex:1;min-width:0}
 .brand-mark{
-  font-size:24px;font-weight:900;letter-spacing:-0.5px;white-space:nowrap;
+  font-size:25px;font-weight:900;letter-spacing:-1px;white-space:nowrap;
 }
 .brand-mark em{
   font-style:normal;
   background:var(--tag);
-  padding:1px 7px 2px;border-radius:4px;
-  box-shadow:2px 2px 0 var(--ink);
+  padding:1px 7px 2px;border-radius:5px;
+  box-shadow:var(--hard-s);
+  display:inline-block;transform:rotate(-1.5deg);
 }
 .brand-tag{
   font-size:12px;color:var(--muted);letter-spacing:0.02em;
@@ -71,175 +75,249 @@ header{
   background:var(--ink);color:var(--paper);
   font-weight:800;font-size:14px;
   padding:9px 16px;border-radius:99px;
+  box-shadow:var(--hard-s);
+  transition:transform .1s ease,box-shadow .1s ease;
 }
+.cart-btn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--ink)}
 .cart-count{
   background:var(--tag);color:var(--ink);
   font-size:12px;font-weight:900;
   min-width:22px;height:22px;border-radius:99px;
   display:flex;align-items:center;justify-content:center;
 }
+.cart-count.pop{animation:pop .3s ease}
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.45)}100%{transform:scale(1)}}
 
-/* ---------- 전체 소진율 스트립 ---------- */
-.burn{
-  background:var(--ink);color:var(--paper);
+/* ---------- 세일 티커 (마퀴) ---------- */
+.ticker{
+  background:var(--ink);
+  overflow:hidden;white-space:nowrap;
+  border-bottom:2px solid var(--ink);
 }
-.burn-in{
-  max-width:1080px;margin:0 auto;
-  padding:10px 16px;
-  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+.ticker-track{
+  display:inline-flex;
+  animation:ticker 22s linear infinite;
 }
-.burn-label{font-size:13px;font-weight:700;letter-spacing:0.03em;white-space:nowrap}
-.burn-label strong{color:var(--tag)}
-.burn-track{
-  flex:1;min-width:140px;height:10px;border-radius:99px;
-  background:rgba(247,246,242,0.22);overflow:hidden;
+.ticker span{
+  color:var(--tag);
+  font-size:13px;font-weight:900;letter-spacing:0.08em;
+  padding:8px 0;
 }
-.burn-fill{
-  height:100%;border-radius:99px;background:var(--tag);
-  transition:width .6s ease;
-}
-.burn-pct{font-size:13px;font-weight:900;color:var(--tag);white-space:nowrap}
+.ticker b{color:var(--paper);font-weight:900}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ---------- 히어로 문구 ---------- */
+/* ---------- 히어로 + 소진율 전광판 ---------- */
 .hero{
+  position:relative;overflow:hidden;
+  border-bottom:2px solid var(--ink);
+  background:
+    radial-gradient(ellipse 90% 70% at 85% 10%, rgba(255,210,63,0.22), transparent 60%),
+    var(--paper);
+}
+.hero-in{
   max-width:1080px;margin:0 auto;
-  padding:34px 16px 8px;
+  padding:44px 16px 34px;
+  position:relative;
+}
+.hero-mark{
+  position:absolute;right:-30px;top:-38px;
+  font-size:clamp(140px,26vw,260px);font-weight:900;letter-spacing:-8px;
+  color:transparent;-webkit-text-stroke:2px rgba(25,23,19,0.07);
+  pointer-events:none;user-select:none;line-height:1;
 }
 .hero h1{
-  font-size:clamp(24px,4.5vw,38px);
-  font-weight:900;letter-spacing:-0.8px;line-height:1.25;
-  text-wrap:balance;
+  font-size:clamp(30px,5.6vw,50px);
+  font-weight:900;letter-spacing:-1.5px;line-height:1.18;
+  text-wrap:balance;position:relative;
 }
-.hero h1 .u9{box-shadow:inset 0 -0.45em var(--tag)}
-.hero p{margin-top:8px;color:var(--muted);font-size:14px;max-width:34em}
-.hero p b{color:var(--ink)}
+.hero h1 .u9{box-shadow:inset 0 -0.42em var(--tag)}
+.hero-sub{margin-top:12px;color:var(--muted);font-size:15px;max-width:34em;position:relative}
+.hero-sub b{color:var(--ink)}
+.hero-sticker{
+  position:absolute;top:38px;right:16px;
+  background:var(--punch);color:#fff;
+  font-size:clamp(12px,1.8vw,15px);font-weight:900;letter-spacing:0.02em;
+  padding:8px 14px;border-radius:6px;
+  box-shadow:var(--hard);
+  transform:rotate(4deg);
+}
+@media(max-width:640px){.hero-sticker{display:none}}
+
+/* 소진율 전광판 */
+.burn{
+  margin-top:26px;position:relative;
+  background:var(--ink);color:var(--paper);
+  border-radius:var(--radius);
+  box-shadow:var(--hard);
+  padding:16px 18px 18px;
+}
+.burn-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.burn-label{font-size:13px;font-weight:800;letter-spacing:0.12em;color:rgba(246,244,238,0.65)}
+.burn-nums{font-size:clamp(17px,3vw,22px);font-weight:900;letter-spacing:-0.5px}
+.burn-nums strong{color:var(--tag)}
+.burn-nums small{font-size:0.72em;font-weight:700;color:rgba(246,244,238,0.65)}
+.burn-track{
+  height:16px;border-radius:99px;
+  background:rgba(246,244,238,0.16);overflow:hidden;
+}
+.burn-fill{
+  height:100%;border-radius:99px;
+  background:repeating-linear-gradient(-45deg,var(--tag) 0 10px,var(--tag-deep) 10px 20px);
+  background-size:28px 28px;
+  animation:stripes 1.2s linear infinite;
+  transition:width .6s ease;
+}
+@keyframes stripes{from{background-position:0 0}to{background-position:28px 0}}
+.burn-note{margin-top:8px;font-size:12px;color:rgba(246,244,238,0.6)}
 
 /* ---------- 가격 설득 섹션 ---------- */
-.why{max-width:1080px;margin:20px auto 10px;padding:0 16px}
+.why{max-width:1080px;margin:26px auto 10px;padding:0 16px}
 .why-box{
   position:relative;
   background:var(--card);
   border:2px solid var(--ink);border-radius:14px;
-  padding:24px 20px 20px;
+  box-shadow:var(--hard);
+  padding:26px 22px 22px;
 }
 .why-sticker{
-  position:absolute;top:-13px;right:18px;
+  position:absolute;top:-14px;right:18px;
   background:var(--tag);color:var(--ink);
   font-size:12.5px;font-weight:900;
-  padding:4px 11px;border-radius:4px;
-  box-shadow:2px 2px 0 var(--ink);
+  padding:5px 12px;border-radius:5px;
+  box-shadow:var(--hard-s);
   transform:rotate(2.5deg);
 }
-.why-title{font-size:19px;font-weight:900;letter-spacing:-0.4px;margin-bottom:16px;text-wrap:balance}
+.why-title{font-size:20px;font-weight:900;letter-spacing:-0.5px;margin-bottom:18px;text-wrap:balance}
 .why-steps{
   list-style:none;counter-reset:step;
-  display:grid;gap:16px;
+  display:grid;gap:18px;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 }
-.why-steps li{counter-increment:step;display:flex;gap:10px;align-items:flex-start}
+.why-steps li{counter-increment:step;display:flex;gap:11px;align-items:flex-start}
 .why-steps li::before{
   content:counter(step);
-  flex:0 0 24px;height:24px;margin-top:1px;
+  flex:0 0 26px;height:26px;margin-top:1px;
   display:flex;align-items:center;justify-content:center;
-  background:var(--ink);color:var(--tag);
-  font-size:13px;font-weight:900;border-radius:99px;
+  background:var(--tag);color:var(--ink);
+  font-size:13.5px;font-weight:900;border-radius:99px;
+  box-shadow:var(--hard-s);
 }
-.why-steps b{display:block;font-size:14px;font-weight:800;margin-bottom:3px}
-.why-steps p{font-size:13px;color:var(--muted);line-height:1.55}
-.anatomy{margin-top:20px;border-top:1.5px dashed var(--line);padding-top:16px}
-.anatomy-label{font-size:12.5px;font-weight:800;letter-spacing:0.05em;margin-bottom:8px}
+.why-steps b{display:block;font-size:14.5px;font-weight:800;margin-bottom:3px}
+.why-steps p{font-size:13px;color:var(--muted);line-height:1.6}
+.why-steps p em{font-style:normal;font-weight:700;color:var(--ink)}
+.anatomy{margin-top:22px;border-top:1.5px dashed var(--line);padding-top:16px}
+.anatomy-label{font-size:12.5px;font-weight:800;letter-spacing:0.08em;margin-bottom:9px}
 .anatomy-bar{
-  display:flex;height:36px;
-  border:1.5px solid var(--ink);border-radius:8px;overflow:hidden;
+  display:flex;height:38px;
+  border:2px solid var(--ink);border-radius:9px;overflow:hidden;
   font-size:12.5px;font-weight:800;
+  box-shadow:var(--hard-s);
 }
 .a-cost{flex:1;background:var(--tag);display:flex;align-items:center;justify-content:center;gap:4px}
 .a-margin{
-  flex:0 0 76px;background:var(--paper);color:var(--muted);
+  flex:0 0 78px;background:var(--paper);color:var(--muted);
   display:flex;align-items:center;justify-content:center;
-  border-left:1.5px dashed var(--ink);
+  border-left:2px dashed var(--ink);
 }
 .anatomy-note{margin-top:9px;font-size:12.5px;color:var(--muted)}
 
 /* ---------- 필터 탭 (카페24: 상품분류 커스텀) ---------- */
 .tabs{
-  position:sticky;top:57px;z-index:30;
+  position:sticky;top:55px;z-index:30;
   background:var(--paper);
-  border-bottom:1px solid var(--line);
+  border-bottom:1.5px solid var(--line);
 }
 .tabs-in{
   max-width:1080px;margin:0 auto;
-  display:flex;gap:8px;padding:12px 16px;
+  display:flex;gap:9px;padding:13px 16px;
   overflow-x:auto;scrollbar-width:none;
 }
 .tabs-in::-webkit-scrollbar{display:none}
 .tab{
-  font-size:13px;font-weight:700;white-space:nowrap;
-  padding:7px 14px;border-radius:99px;
-  border:1.5px solid var(--line);background:var(--card);color:var(--muted);
+  font-size:13px;font-weight:800;white-space:nowrap;
+  padding:7px 15px;border-radius:99px;
+  border:1.5px solid var(--ink);background:var(--card);color:var(--ink);
+  transition:transform .1s ease;
 }
 .tab[aria-pressed="true"]{
-  background:var(--ink);border-color:var(--ink);color:var(--paper);
+  background:var(--ink);color:var(--paper);
+  box-shadow:var(--hard-s);
 }
+.tab[aria-pressed="true"] .cnt{color:var(--tag)}
+.tab:active{transform:translate(1px,1px)}
 .tab .cnt{font-weight:900;margin-left:4px}
-.tab-hot[aria-pressed="true"]{background:var(--punch);border-color:var(--punch)}
+.tab-hot{border-color:var(--punch);color:var(--punch)}
+.tab-hot[aria-pressed="true"]{background:var(--punch);border-color:var(--punch);color:#fff}
+.tab-hot[aria-pressed="true"] .cnt{color:#FFD9CF}
 
 /* ---------- 상품 그리드 (카페24: product/list 모듈 위치) ---------- */
-.grid-wrap{max-width:1080px;margin:0 auto;padding:18px 16px 40px}
+.grid-wrap{max-width:1080px;margin:0 auto;padding:20px 16px 44px}
 .grid{
-  display:grid;gap:14px;
+  display:grid;gap:16px;
   grid-template-columns:repeat(auto-fill,minmax(168px,1fr));
 }
 .card{
   background:var(--card);
-  border:1.5px solid var(--line);
+  border:2px solid var(--ink);
   border-radius:var(--radius);
   overflow:hidden;
   display:flex;flex-direction:column;
   position:relative;
-  transition:transform .12s ease, box-shadow .12s ease;
+  transition:transform .12s ease,box-shadow .12s ease;
 }
-.card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(28,26,23,0.08)}
+.card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.card.soldout:hover{transform:none;box-shadow:none}
 .thumb{
   aspect-ratio:1/1;
   display:flex;align-items:center;justify-content:center;
-  font-size:52px;
-  border-bottom:1.5px solid var(--line);
+  font-size:56px;
+  border-bottom:2px solid var(--ink);
   user-select:none;
 }
+.thumb span{filter:drop-shadow(0 6px 8px rgba(25,23,19,0.18))}
 .price-sticker{
   position:absolute;top:10px;left:10px;
   font-size:13px;font-weight:900;letter-spacing:-0.2px;
   background:var(--tag);color:var(--ink);
-  padding:3px 9px;border-radius:4px;
-  box-shadow:2px 2px 0 var(--ink);
+  padding:4px 10px 4px 18px;border-radius:5px;
+  box-shadow:var(--hard-s);
+  transform:rotate(-2deg);
 }
-.price-sticker.p1900{background:var(--card);border:1.5px solid var(--ink)}
+.price-sticker::before{ /* 가격표 펀칭 구멍 */
+  content:"";position:absolute;left:7px;top:50%;
+  width:5px;height:5px;border-radius:99px;
+  transform:translateY(-50%);
+  background:var(--card);box-shadow:inset 0 0 0 1.5px var(--ink);
+}
+.price-sticker.p1900{background:var(--card)}
 .low-flag{
   position:absolute;top:10px;right:10px;
   font-size:11px;font-weight:800;
   background:var(--punch);color:#fff;
-  padding:3px 8px;border-radius:99px;
+  padding:3px 9px;border-radius:99px;
+  box-shadow:var(--hard-s);
 }
-.card-body{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card-body{padding:13px;display:flex;flex-direction:column;gap:8px;flex:1}
 .p-name{font-size:13.5px;font-weight:600;line-height:1.35;flex:1}
 .p-prices{display:flex;align-items:baseline;gap:6px;margin-bottom:-4px}
 .p-ref{font-size:12px;color:var(--muted);text-decoration:line-through}
 .p-off{font-size:12px;font-weight:900;color:var(--punch)}
 .p-meta{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
-.p-price{font-size:17px;font-weight:900;letter-spacing:-0.3px}
+.p-price{font-size:18px;font-weight:900;letter-spacing:-0.5px}
 .p-stock{font-size:12px;color:var(--muted)}
 .p-stock.low{color:var(--punch);font-weight:700}
 .add-btn{
   background:var(--ink);color:var(--paper);
   font-size:13.5px;font-weight:800;
-  padding:9px 0;border-radius:8px;
-  transition:background .12s ease;
+  padding:10px 0;border-radius:9px;
+  box-shadow:var(--hard-s);
+  transition:transform .1s ease,box-shadow .1s ease;
 }
-.add-btn:hover{background:#3a362f}
+.add-btn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--ink)}
 .stepper{
   display:flex;align-items:center;
-  border:1.5px solid var(--ink);border-radius:8px;overflow:hidden;
+  border:2px solid var(--ink);border-radius:9px;overflow:hidden;
+  box-shadow:var(--hard-s);
 }
 .stepper button{
   flex:0 0 40px;padding:8px 0;font-size:16px;font-weight:900;
@@ -247,15 +325,18 @@ header{
 }
 .stepper button:disabled{opacity:0.35;cursor:default}
 .stepper .qty{flex:1;text-align:center;font-weight:900;font-size:15px}
-.card.soldout .thumb,.card.soldout .card-body{opacity:0.42}
+.card.soldout{border-color:var(--line)}
+.card.soldout .thumb{border-color:var(--line)}
+.card.soldout .thumb,.card.soldout .card-body{opacity:0.38;filter:grayscale(0.6)}
 .soldout-stamp{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%) rotate(-8deg);
-  font-size:20px;font-weight:900;letter-spacing:0.12em;
+  position:absolute;top:46%;left:50%;
+  transform:translate(-50%,-50%) rotate(-12deg);
+  font-size:19px;font-weight:900;letter-spacing:0.14em;
   color:var(--punch);
-  border:3px solid var(--punch);border-radius:6px;
-  padding:4px 14px;background:rgba(255,255,255,0.85);
+  border:3px double var(--punch);border-radius:7px;
+  padding:5px 14px;background:rgba(255,255,255,0.88);
   pointer-events:none;
+  mix-blend-mode:multiply;
 }
 .empty-msg{color:var(--muted);font-size:14px;padding:40px 0;text-align:center;grid-column:1/-1}
 
@@ -264,32 +345,51 @@ header{
   position:fixed;left:0;right:0;bottom:0;z-index:50;
   background:var(--card);
   border-top:2px solid var(--ink);
-  box-shadow:0 -6px 20px rgba(28,26,23,0.10);
+  box-shadow:0 -8px 24px rgba(25,23,19,0.12);
 }
 .gauge-in{
   max-width:1080px;margin:0 auto;
-  padding:12px 16px;
+  padding:14px 16px 13px;
   display:flex;align-items:center;gap:14px;
 }
 .gauge-info{flex:1;min-width:0}
-.gauge-msg{font-size:13.5px;font-weight:700;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gauge-msg{font-size:13.5px;font-weight:700;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .gauge-msg .amt{color:var(--punch);font-weight:900}
 .gauge-msg.done{color:var(--go)}
-.gauge-track{height:8px;border-radius:99px;background:var(--paper);border:1px solid var(--line);overflow:hidden}
-.gauge-fill{height:100%;border-radius:99px;background:var(--punch);transition:width .3s ease,background .3s ease}
-.gauge-fill.done{background:var(--go)}
+.gauge-track{
+  position:relative;
+  height:10px;border-radius:99px;
+  background:var(--paper);border:1.5px solid var(--line);
+}
+.gauge-fill{
+  height:100%;border-radius:99px;
+  background:repeating-linear-gradient(-45deg,var(--punch) 0 8px,var(--punch-deep) 8px 16px);
+  background-size:23px 23px;
+  animation:stripes .9s linear infinite;
+  transition:width .3s ease;
+}
+.gauge-fill.done{background:repeating-linear-gradient(-45deg,var(--go) 0 8px,#116B3D 8px 16px);background-size:23px 23px}
+.gauge-truck{
+  position:absolute;top:-16px;
+  font-size:17px;line-height:1;
+  transform:translateX(-50%) scaleX(-1);
+  transition:left .3s ease;
+  pointer-events:none;
+}
 .gauge-open{
   background:var(--tag);color:var(--ink);
   font-size:14px;font-weight:900;letter-spacing:-0.2px;
-  padding:11px 18px;border-radius:10px;
-  box-shadow:2px 2px 0 var(--ink);
+  padding:12px 18px;border-radius:10px;
+  box-shadow:var(--hard-s);
   white-space:nowrap;
+  transition:transform .1s ease,box-shadow .1s ease;
 }
+.gauge-open:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--ink)}
 
 /* ---------- 장바구니 드로어 (카페24: order/basket 커스텀) ---------- */
 .scrim{
   position:fixed;inset:0;z-index:60;
-  background:rgba(28,26,23,0.45);
+  background:rgba(25,23,19,0.5);
   opacity:0;pointer-events:none;transition:opacity .2s ease;
 }
 .scrim.show{opacity:1;pointer-events:auto}
@@ -305,20 +405,21 @@ header{
 .drawer-head{
   display:flex;align-items:center;justify-content:space-between;
   padding:16px;border-bottom:2px solid var(--ink);
+  background:var(--card);
 }
 .drawer-head h2{font-size:17px;font-weight:900}
 .drawer-close{font-size:22px;font-weight:900;padding:2px 8px}
-.drawer-list{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+.drawer-list{flex:1;overflow-y:auto;padding:13px 16px;display:flex;flex-direction:column;gap:10px}
 .cart-row{
   display:flex;align-items:center;gap:10px;
-  background:var(--card);border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);border:1.5px solid var(--ink);border-radius:11px;
   padding:10px;
 }
-.cart-emoji{font-size:26px;flex:0 0 auto}
+.cart-emoji{font-size:27px;flex:0 0 auto;filter:drop-shadow(0 3px 4px rgba(25,23,19,0.15))}
 .cart-info{flex:1;min-width:0}
 .cart-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cart-price{font-size:12.5px;color:var(--muted)}
-.mini-step{display:flex;align-items:center;gap:0;border:1.5px solid var(--ink);border-radius:7px;overflow:hidden}
+.mini-step{display:flex;align-items:center;gap:0;border:1.5px solid var(--ink);border-radius:8px;overflow:hidden}
 .mini-step button{width:28px;padding:4px 0;font-weight:900;background:var(--ink);color:var(--paper);font-size:14px}
 .mini-step button:disabled{opacity:0.35;cursor:default}
 .mini-step .q{width:32px;text-align:center;font-weight:900;font-size:13.5px}
@@ -330,9 +431,9 @@ header{
 .sum-row.total{font-size:16px;font-weight:900;color:var(--ink);padding-top:8px;margin-top:6px;border-top:1.5px dashed var(--line)}
 .sum-row .free{color:var(--go);font-weight:900}
 .ship-hint{
-  margin-top:8px;font-size:12.5px;font-weight:700;
+  margin-top:9px;font-size:12.5px;font-weight:700;
   background:var(--paper);border:1.5px dashed var(--punch);color:var(--punch);
-  border-radius:8px;padding:8px 10px;text-align:center;
+  border-radius:9px;padding:8px 10px;text-align:center;
 }
 .ship-hint.ok{border-color:var(--go);color:var(--go);background:var(--go-soft)}
 .checkout-btn{
@@ -340,14 +441,17 @@ header{
   background:var(--punch);color:#fff;
   font-size:15.5px;font-weight:900;letter-spacing:-0.2px;
   padding:14px 0;border-radius:10px;
+  box-shadow:var(--hard-s);
+  transition:transform .1s ease,box-shadow .1s ease;
 }
-.checkout-btn:disabled{background:var(--line);color:var(--muted);cursor:default}
+.checkout-btn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--ink)}
+.checkout-btn:disabled{background:var(--line);color:var(--muted);cursor:default;box-shadow:none;transform:none}
 
 /* ---------- 주문 모달 (시연용 · 카페24에서는 기본 주문서로 대체) ---------- */
 .modal{
   position:fixed;inset:0;z-index:80;
   display:none;align-items:flex-end;justify-content:center;
-  background:rgba(28,26,23,0.5);
+  background:rgba(25,23,19,0.55);
   padding:0;
 }
 .modal.show{display:flex}
@@ -356,72 +460,77 @@ header{
   background:var(--paper);
   border:2px solid var(--ink);border-bottom:none;
   border-radius:16px 16px 0 0;
-  padding:20px 18px 26px;
+  padding:22px 18px 26px;
 }
 @media(min-width:520px){
   .modal{align-items:center;padding:20px}
-  .modal-box{border-radius:16px;border-bottom:2px solid var(--ink)}
+  .modal-box{border-radius:16px;border-bottom:2px solid var(--ink);box-shadow:var(--hard)}
 }
 .modal-box h2{font-size:18px;font-weight:900;margin-bottom:4px}
 .modal-sub{font-size:12.5px;color:var(--muted);margin-bottom:16px}
 .field{margin-bottom:12px}
-.field label{display:block;font-size:12.5px;font-weight:800;letter-spacing:0.04em;margin-bottom:5px}
+.field label{display:block;font-size:12.5px;font-weight:800;letter-spacing:0.05em;margin-bottom:5px}
 .field input{
   width:100%;padding:11px 12px;font-size:14.5px;
-  border:1.5px solid var(--line);border-radius:8px;
+  border:1.5px solid var(--ink);border-radius:9px;
   background:var(--card);color:var(--ink);
 }
-.field input:focus{border-color:var(--ink)}
 .pay-opts{display:flex;gap:8px;margin-bottom:16px}
-.pay-opt{flex:1}
+.pay-opt{flex:1;position:relative}
 .pay-opt input{position:absolute;opacity:0;pointer-events:none}
 .pay-opt span{
   display:block;text-align:center;font-size:13px;font-weight:700;
-  border:1.5px solid var(--line);border-radius:8px;padding:10px 0;
-  background:var(--card);color:var(--muted);
+  border:1.5px solid var(--ink);border-radius:9px;padding:10px 0;
+  background:var(--card);color:var(--ink);
 }
-.pay-opt input:checked + span{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.pay-opt input:checked + span{background:var(--ink);color:var(--paper);box-shadow:var(--hard-s)}
 .pay-opt input:focus-visible + span{outline:3px solid var(--tag-deep);outline-offset:2px}
 .order-btn{
   width:100%;background:var(--ink);color:var(--paper);
   font-size:15.5px;font-weight:900;padding:14px 0;border-radius:10px;
+  box-shadow:var(--hard-s);
+  transition:transform .1s ease,box-shadow .1s ease;
 }
+.order-btn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--ink)}
 .modal-cancel{width:100%;margin-top:8px;font-size:13px;color:var(--muted);padding:8px 0;text-decoration:underline}
 
 /* 완료 화면 */
 .done-box{text-align:center;padding:8px 0}
-.done-emoji{font-size:44px}
+.done-emoji{font-size:46px;filter:drop-shadow(0 6px 8px rgba(25,23,19,0.2))}
 .done-box h2{margin:10px 0 6px}
 .done-no{
   display:inline-block;margin:6px 0 14px;
   font-weight:900;font-size:14px;letter-spacing:0.05em;
-  background:var(--tag);padding:4px 12px;border-radius:5px;
-  box-shadow:2px 2px 0 var(--ink);
+  background:var(--tag);padding:5px 13px;border-radius:5px;
+  box-shadow:var(--hard-s);transform:rotate(-1.5deg);
 }
 .done-note{font-size:12.5px;color:var(--muted);margin-bottom:16px}
 
 /* 토스트 */
 .toast{
-  position:fixed;left:50%;bottom:104px;z-index:90;
+  position:fixed;left:50%;bottom:110px;z-index:90;
   transform:translateX(-50%) translateY(16px);
-  background:var(--ink);color:var(--paper);
-  font-size:13.5px;font-weight:700;
+  background:var(--tag);color:var(--ink);
+  border:2px solid var(--ink);
+  font-size:13.5px;font-weight:800;
   padding:10px 18px;border-radius:99px;
+  box-shadow:var(--hard-s);
   opacity:0;pointer-events:none;
   transition:opacity .2s ease,transform .2s ease;
   white-space:nowrap;
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.toast .amt{color:var(--tag);font-weight:900}
+.toast .amt{color:var(--punch);font-weight:900}
 
 footer{
   max-width:1080px;margin:0 auto;
-  padding:24px 16px 40px;
+  padding:24px 16px 44px;
   font-size:12px;color:var(--muted);line-height:1.7;
-  border-top:1px solid var(--line);
+  border-top:1.5px solid var(--line);
 }
 @media(prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
+  .ticker{overflow-x:auto}
 }
 </style>
 
@@ -439,19 +548,28 @@ footer{
   </div>
 </header>
 
-<!-- ================= 전체 소진율 ================= -->
-<div class="burn" role="status">
-  <div class="burn-in">
-    <span class="burn-label">전체 재고 <strong class="num" id="burnTotal">12,400</strong>개 중 <strong class="num" id="burnSold">0</strong>개 소진</span>
-    <div class="burn-track" aria-hidden="true"><div class="burn-fill" id="burnFill" style="width:0%"></div></div>
-    <span class="burn-pct num" id="burnPct">0%</span>
-  </div>
+<!-- ================= 세일 티커 ================= -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="tickerTrack"></div>
 </div>
 
-<!-- ================= 히어로 ================= -->
+<!-- ================= 히어로 + 소진율 전광판 ================= -->
 <section class="hero">
-  <h1>원가에 폭탄 정리,<br><span class="u9">전 상품 900원 · 1,900원</span></h1>
-  <p><b>9,800원 이상 무료배송.</b> 재입고는 없습니다 — 지금 보이는 수량이 마지막 수량이에요.</p>
+  <div class="hero-in">
+    <div class="hero-mark num" aria-hidden="true">₩900</div>
+    <span class="hero-sticker">원가 방출<br>마진 0원</span>
+    <h1>창고를 통째로 엽니다<br><span class="u9">전 상품 900원 · 1,900원</span></h1>
+    <p class="hero-sub"><b>9,800원 이상 무료배송.</b> 재입고는 없습니다 — 지금 보이는 수량이 마지막 수량이에요.</p>
+
+    <div class="burn" role="status">
+      <div class="burn-top">
+        <span class="burn-label">실시간 재고 소진 현황</span>
+        <span class="burn-nums num"><strong id="burnSold">0</strong><small> / <span id="burnTotal">12,400</span>개</small> · <strong id="burnPct">0%</strong></span>
+      </div>
+      <div class="burn-track" aria-hidden="true"><div class="burn-fill" id="burnFill" style="width:0%"></div></div>
+      <div class="burn-note">주문이 들어올 때마다 게이지가 올라갑니다. 100%가 되면 문을 닫아요.</div>
+    </div>
+  </div>
 </section>
 
 <!-- ================= 가격 설득 섹션 ================= -->
@@ -462,7 +580,7 @@ footer{
     <ol class="why-steps">
       <li><div>
         <b>재고는 죄가 없어요</b>
-        <p>리파코 창고에 오래 잠들어 있던 <em style="font-style:normal;font-weight:700;color:var(--ink)">새 상품</em>들입니다. 하자품도 중고도 아니고, 그냥 많이 만들어서 남은 정품이에요.</p>
+        <p>리파코 창고에 오래 잠들어 있던 <em>새 상품</em>들입니다. 하자품도 중고도 아니고, 그냥 많이 만들어서 남은 정품이에요.</p>
       </div></li>
       <li><div>
         <b>보관비가 상품값을 넘었어요</b>
@@ -499,7 +617,10 @@ footer{
   <div class="gauge-in">
     <div class="gauge-info">
       <div class="gauge-msg" id="gaugeMsg">담기 시작하면 무료배송 게이지가 차올라요</div>
-      <div class="gauge-track" aria-hidden="true"><div class="gauge-fill" id="gaugeFill" style="width:0%"></div></div>
+      <div class="gauge-track" aria-hidden="true">
+        <div class="gauge-fill" id="gaugeFill" style="width:0%"></div>
+        <span class="gauge-truck" id="gaugeTruck" style="left:0%">🚚</span>
+      </div>
     </div>
     <button class="gauge-open num" id="gaugeOpenBtn" aria-label="장바구니 보기">0원 · 보기</button>
   </div>
@@ -559,7 +680,7 @@ footer{
 <footer>
   900LAB 프로토타입 · 리파코 장기체화재고 소진 프로젝트<br>
   900원/1,900원 균일가 · 9,800원 이상 무료배송(미만 3,500원) · 재입고 없음<br>
-  본 페이지는 시연용이며 상품·재고·주문은 모두 데모 데이터입니다.
+  본 페이지는 시연용이며 상품·재고·주문·정상가는 모두 데모 데이터입니다.
 </footer>
 
 <script>
@@ -605,6 +726,10 @@ const won = n => n.toLocaleString("ko-KR") + "원";
 const byId = id => PRODUCTS.find(p => p.id === id);
 const avail = p => p.stock - (cart.get(p.id) || 0);
 
+/* ============ 세일 티커 ============ */
+const TICKER = `<span>⚡ 전부 <b>900원 · 1,900원</b>&nbsp;&nbsp;·&nbsp;&nbsp;마진 0원 원가 방출&nbsp;&nbsp;·&nbsp;&nbsp;<b>9,800원 이상 무료배송</b>&nbsp;&nbsp;·&nbsp;&nbsp;재입고 없음, 소진되면 끝&nbsp;&nbsp;·&nbsp;&nbsp;</span>`;
+$("tickerTrack").innerHTML = TICKER.repeat(4);
+
 /* ============ 필터 탭 ============ */
 const TABS = [
   {key:"all",  label:"전체"},
@@ -643,7 +768,7 @@ function cardHTML(p){
          <button data-inc="${p.id}" aria-label="더 담기" ${avail(p)<=0?"disabled":""}>+</button>
        </div>`;
   return `<article class="card ${out?"soldout":""}">
-    <div class="thumb" style="background:${p.hue}">${p.emoji}</div>
+    <div class="thumb" style="background:radial-gradient(circle at 32% 26%, rgba(255,255,255,0.75), transparent 62%), ${p.hue}"><span>${p.emoji}</span></div>
     <span class="price-sticker num ${p.price===1900?"p1900":""}">${p.price.toLocaleString()}원</span>
     ${low?`<span class="low-flag num">품절임박 ${p.stock}</span>`:""}
     ${out?`<span class="soldout-stamp">SOLD OUT</span>`:""}
@@ -682,7 +807,11 @@ function changeQty(id, delta, toastOn){
   if(delta>0 && avail(p)<=0) return;
   if(next<=0) cart.delete(id); else cart.set(id,next);
   renderAll();
-  if(toastOn) showToast();
+  if(toastOn){
+    showToast();
+    const c=$("cartCount");
+    c.classList.remove("pop"); void c.offsetWidth; c.classList.add("pop");
+  }
 }
 function subtotal(){
   let s=0; for(const [id,q] of cart) s += byId(id).price*q; return s;
@@ -736,6 +865,7 @@ function renderGauge(){
   const pct=Math.min(100, sub/FREE_SHIP*100);
   const fill=$("gaugeFill"), msg=$("gaugeMsg");
   fill.style.width=pct+"%";
+  $("gaugeTruck").style.left=pct+"%";
   fill.classList.toggle("done", sub>=FREE_SHIP);
   msg.classList.toggle("done", sub>=FREE_SHIP);
   if(sub===0) msg.textContent="담기 시작하면 무료배송 게이지가 차올라요";
@@ -748,7 +878,7 @@ function renderGauge(){
   $("cartCount").textContent = itemCount();
 }
 
-/* ============ 소진율 배너 ============ */
+/* ============ 소진율 전광판 ============ */
 function renderBurn(){
   const sold=SOLD_BASE+demoSold;
   const pct=(sold/TOTAL_INV*100);
