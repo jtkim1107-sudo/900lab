@@ -114,6 +114,53 @@ header{
 .hero p{margin-top:8px;color:var(--muted);font-size:14px;max-width:34em}
 .hero p b{color:var(--ink)}
 
+/* ---------- 가격 설득 섹션 ---------- */
+.why{max-width:1080px;margin:20px auto 10px;padding:0 16px}
+.why-box{
+  position:relative;
+  background:var(--card);
+  border:2px solid var(--ink);border-radius:14px;
+  padding:24px 20px 20px;
+}
+.why-sticker{
+  position:absolute;top:-13px;right:18px;
+  background:var(--tag);color:var(--ink);
+  font-size:12.5px;font-weight:900;
+  padding:4px 11px;border-radius:4px;
+  box-shadow:2px 2px 0 var(--ink);
+  transform:rotate(2.5deg);
+}
+.why-title{font-size:19px;font-weight:900;letter-spacing:-0.4px;margin-bottom:16px;text-wrap:balance}
+.why-steps{
+  list-style:none;counter-reset:step;
+  display:grid;gap:16px;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+}
+.why-steps li{counter-increment:step;display:flex;gap:10px;align-items:flex-start}
+.why-steps li::before{
+  content:counter(step);
+  flex:0 0 24px;height:24px;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--ink);color:var(--tag);
+  font-size:13px;font-weight:900;border-radius:99px;
+}
+.why-steps b{display:block;font-size:14px;font-weight:800;margin-bottom:3px}
+.why-steps p{font-size:13px;color:var(--muted);line-height:1.55}
+.anatomy{margin-top:20px;border-top:1.5px dashed var(--line);padding-top:16px}
+.anatomy-label{font-size:12.5px;font-weight:800;letter-spacing:0.05em;margin-bottom:8px}
+.anatomy-bar{
+  display:flex;height:36px;
+  border:1.5px solid var(--ink);border-radius:8px;overflow:hidden;
+  font-size:12.5px;font-weight:800;
+}
+.a-cost{flex:1;background:var(--tag);display:flex;align-items:center;justify-content:center;gap:4px}
+.a-margin{
+  flex:0 0 76px;background:var(--paper);color:var(--muted);
+  display:flex;align-items:center;justify-content:center;
+  border-left:1.5px dashed var(--ink);
+}
+.anatomy-note{margin-top:9px;font-size:12.5px;color:var(--muted)}
+
 /* ---------- 필터 탭 (카페24: 상품분류 커스텀) ---------- */
 .tabs{
   position:sticky;top:57px;z-index:30;
@@ -176,6 +223,9 @@ header{
 }
 .card-body{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1}
 .p-name{font-size:13.5px;font-weight:600;line-height:1.35;flex:1}
+.p-prices{display:flex;align-items:baseline;gap:6px;margin-bottom:-4px}
+.p-ref{font-size:12px;color:var(--muted);text-decoration:line-through}
+.p-off{font-size:12px;font-weight:900;color:var(--punch)}
 .p-meta{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
 .p-price{font-size:17px;font-weight:900;letter-spacing:-0.3px}
 .p-stock{font-size:12px;color:var(--muted)}
@@ -276,6 +326,7 @@ header{
 .drawer-foot{border-top:2px solid var(--ink);padding:14px 16px;background:var(--card)}
 .sum-row{display:flex;justify-content:space-between;font-size:13.5px;padding:3px 0;color:var(--muted)}
 .sum-row b{color:var(--ink)}
+.sum-row.save b{color:var(--go)}
 .sum-row.total{font-size:16px;font-weight:900;color:var(--ink);padding-top:8px;margin-top:6px;border-top:1.5px dashed var(--line)}
 .sum-row .free{color:var(--go);font-weight:900}
 .ship-hint{
@@ -403,6 +454,36 @@ footer{
   <p><b>9,800원 이상 무료배송.</b> 재입고는 없습니다 — 지금 보이는 수량이 마지막 수량이에요.</p>
 </section>
 
+<!-- ================= 가격 설득 섹션 ================= -->
+<section class="why" aria-label="가격이 가능한 이유">
+  <div class="why-box">
+    <span class="why-sticker">마진 0원 · 원가 그대로</span>
+    <h2 class="why-title">왜 전부 900원 · 1,900원이냐면요</h2>
+    <ol class="why-steps">
+      <li><div>
+        <b>재고는 죄가 없어요</b>
+        <p>리파코 창고에 오래 잠들어 있던 <em style="font-style:normal;font-weight:700;color:var(--ink)">새 상품</em>들입니다. 하자품도 중고도 아니고, 그냥 많이 만들어서 남은 정품이에요.</p>
+      </div></li>
+      <li><div>
+        <b>보관비가 상품값을 넘었어요</b>
+        <p>창고에 두는 날마다 보관비가 나갑니다. 이제는 갖고 있는 게 파는 것보다 더 손해인 시점이 됐어요.</p>
+      </div></li>
+      <li><div>
+        <b>그래서 원가에 던집니다</b>
+        <p>이익을 붙일 이유가 없어서 원가 그대로 900원·1,900원. 다 팔리면 재입고 없이 이 사이트도 닫습니다.</p>
+      </div></li>
+    </ol>
+    <div class="anatomy">
+      <div class="anatomy-label">900원을 뜯어보면</div>
+      <div class="anatomy-bar" role="img" aria-label="900원 전액이 상품 원가이며 마진은 0원입니다">
+        <span class="a-cost">상품 원가 900원</span>
+        <span class="a-margin">마진 0원</span>
+      </div>
+      <p class="anatomy-note">정상가와의 차액은 할인해드리는 게 아니라, 저희가 창고비 대신 지불하는 금액입니다.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ================= 필터 탭 ================= -->
 <nav class="tabs" aria-label="상품 필터">
   <div class="tabs-in" id="tabBar"></div>
@@ -434,6 +515,7 @@ footer{
   <div class="drawer-list" id="cartList"></div>
   <div class="drawer-foot">
     <div class="sum-row"><span>상품 금액</span><b class="num" id="sumItems">0원</b></div>
+    <div class="sum-row save"><span>정상가 대비 아낀 금액</span><b class="num" id="sumSave">0원</b></div>
     <div class="sum-row"><span>배송비</span><b class="num" id="sumShip">0원</b></div>
     <div class="sum-row total"><span>합계</span><span class="num" id="sumTotal">0원</span></div>
     <div class="ship-hint" id="shipHint">9,800원 이상 담으면 배송비 3,500원이 무료!</div>
@@ -486,30 +568,30 @@ const FREE_SHIP = 9800, SHIP_FEE = 3500;
 const TOTAL_INV = 12400, SOLD_BASE = 7132;
 
 const PRODUCTS = [
-  {id:1, name:"주방 수세미 3입 (양면)",        price:900,  stock:143, emoji:"🧽", hue:"#FFF3D6"},
-  {id:2, name:"극세사 행주 2매",               price:900,  stock:87,  emoji:"🧻", hue:"#E8F1FA"},
-  {id:3, name:"볼펜 0.5mm 3자루 (흑)",         price:900,  stock:210, emoji:"🖊️", hue:"#EFEAF8"},
-  {id:4, name:"스텐 티스푼 2P",                price:900,  stock:9,   emoji:"🥄", hue:"#EDEDED"},
-  {id:5, name:"다용도 집게 4P",                price:900,  stock:64,  emoji:"🗜️", hue:"#FDEAE4"},
-  {id:6, name:"욕실 청소 스펀지",              price:900,  stock:38,  emoji:"🫧", hue:"#E4F4F1"},
-  {id:7, name:"지퍼백 소형 30매",              price:900,  stock:176, emoji:"🛍️", hue:"#F4F0E4"},
-  {id:8, name:"점착 메모패드 3권",             price:900,  stock:0,   emoji:"📒", hue:"#FFF8D9"},
-  {id:9, name:"세탁망 소형 (원형)",            price:900,  stock:52,  emoji:"🧺", hue:"#EAF3E6"},
-  {id:10,name:"케이블타이 100P",               price:900,  stock:7,   emoji:"🪢", hue:"#F0EDE6"},
-  {id:11,name:"위생 면봉 300입",               price:900,  stock:95,  emoji:"🤍", hue:"#F7EDF2"},
-  {id:12,name:"칫솔 캡 4P",                    price:900,  stock:0,   emoji:"🪥", hue:"#E6F0F7"},
-  {id:13,name:"밀폐용기 500ml 2P",             price:1900, stock:46,  emoji:"🫙", hue:"#EDF5EC"},
-  {id:14,name:"스텐 주방가위",                 price:1900, stock:31,  emoji:"✂️", hue:"#ECECF2"},
-  {id:15,name:"극세사 핸드타월 2P",            price:1900, stock:8,   emoji:"🧣", hue:"#FBEDE7"},
-  {id:16,name:"주방 고무장갑 (M)",             price:1900, stock:73,  emoji:"🧤", hue:"#FDF1DC"},
-  {id:17,name:"다용도 정리 트레이",            price:1900, stock:29,  emoji:"🗂️", hue:"#EAF0F6"},
-  {id:18,name:"마스킹테이프 5롤 세트",         price:1900, stock:55,  emoji:"🎨", hue:"#F5ECF6"},
-  {id:19,name:"샤워타월 (롱)",                 price:1900, stock:0,   emoji:"🚿", hue:"#E5F2F4"},
-  {id:20,name:"미니 빗자루+쓰레받기",          price:1900, stock:17,  emoji:"🧹", hue:"#F3EFE3"},
-  {id:21,name:"텀블러 세척 브러시",            price:1900, stock:6,   emoji:"🍶", hue:"#E9F3EE"},
-  {id:22,name:"A5 무지 노트 3권",              price:1900, stock:81,  emoji:"📘", hue:"#E9EEF8"},
-  {id:23,name:"부착식 후크걸이 10P",           price:1900, stock:42,  emoji:"🪝", hue:"#F1EDE9"},
-  {id:24,name:"규조토 발매트",                 price:1900, stock:12,  emoji:"🦶", hue:"#EFEBE2"},
+  {id:1, name:"주방 수세미 3입 (양면)",        price:900,  ref:2900, stock:143, emoji:"🧽", hue:"#FFF3D6"},
+  {id:2, name:"극세사 행주 2매",               price:900,  ref:2500, stock:87,  emoji:"🧻", hue:"#E8F1FA"},
+  {id:3, name:"볼펜 0.5mm 3자루 (흑)",         price:900,  ref:2400, stock:210, emoji:"🖊️", hue:"#EFEAF8"},
+  {id:4, name:"스텐 티스푼 2P",                price:900,  ref:3500, stock:9,   emoji:"🥄", hue:"#EDEDED"},
+  {id:5, name:"다용도 집게 4P",                price:900,  ref:2900, stock:64,  emoji:"🗜️", hue:"#FDEAE4"},
+  {id:6, name:"욕실 청소 스펀지",              price:900,  ref:1900, stock:38,  emoji:"🫧", hue:"#E4F4F1"},
+  {id:7, name:"지퍼백 소형 30매",              price:900,  ref:2900, stock:176, emoji:"🛍️", hue:"#F4F0E4"},
+  {id:8, name:"점착 메모패드 3권",             price:900,  ref:2700, stock:0,   emoji:"📒", hue:"#FFF8D9"},
+  {id:9, name:"세탁망 소형 (원형)",            price:900,  ref:2500, stock:52,  emoji:"🧺", hue:"#EAF3E6"},
+  {id:10,name:"케이블타이 100P",               price:900,  ref:2900, stock:7,   emoji:"🪢", hue:"#F0EDE6"},
+  {id:11,name:"위생 면봉 300입",               price:900,  ref:2500, stock:95,  emoji:"🤍", hue:"#F7EDF2"},
+  {id:12,name:"칫솔 캡 4P",                    price:900,  ref:1900, stock:0,   emoji:"🪥", hue:"#E6F0F7"},
+  {id:13,name:"밀폐용기 500ml 2P",             price:1900, ref:5900, stock:46,  emoji:"🫙", hue:"#EDF5EC"},
+  {id:14,name:"스텐 주방가위",                 price:1900, ref:6900, stock:31,  emoji:"✂️", hue:"#ECECF2"},
+  {id:15,name:"극세사 핸드타월 2P",            price:1900, ref:4900, stock:8,   emoji:"🧣", hue:"#FBEDE7"},
+  {id:16,name:"주방 고무장갑 (M)",             price:1900, ref:3900, stock:73,  emoji:"🧤", hue:"#FDF1DC"},
+  {id:17,name:"다용도 정리 트레이",            price:1900, ref:4900, stock:29,  emoji:"🗂️", hue:"#EAF0F6"},
+  {id:18,name:"마스킹테이프 5롤 세트",         price:1900, ref:6500, stock:55,  emoji:"🎨", hue:"#F5ECF6"},
+  {id:19,name:"샤워타월 (롱)",                 price:1900, ref:3900, stock:0,   emoji:"🚿", hue:"#E5F2F4"},
+  {id:20,name:"미니 빗자루+쓰레받기",          price:1900, ref:5900, stock:17,  emoji:"🧹", hue:"#F3EFE3"},
+  {id:21,name:"텀블러 세척 브러시",            price:1900, ref:4500, stock:6,   emoji:"🍶", hue:"#E9F3EE"},
+  {id:22,name:"A5 무지 노트 3권",              price:1900, ref:5400, stock:81,  emoji:"📘", hue:"#E9EEF8"},
+  {id:23,name:"부착식 후크걸이 10P",           price:1900, ref:4900, stock:42,  emoji:"🪝", hue:"#F1EDE9"},
+  {id:24,name:"규조토 발매트",                 price:1900, ref:8900, stock:12,  emoji:"🦶", hue:"#EFEBE2"},
 ];
 
 /* ============ 상태 ============ */
@@ -567,6 +649,10 @@ function cardHTML(p){
     ${out?`<span class="soldout-stamp">SOLD OUT</span>`:""}
     <div class="card-body">
       <div class="p-name">${p.name}</div>
+      <div class="p-prices">
+        <span class="p-ref num">${won(p.ref)}</span>
+        <span class="p-off num">-${Math.round((1-p.price/p.ref)*100)}%</span>
+      </div>
       <div class="p-meta">
         <span class="p-price num">${won(p.price)}</span>
         <span class="p-stock num ${low?"low":""}">${out?"소진 완료":"남은 수량 "+p.stock}</span>
@@ -626,7 +712,9 @@ function renderCart(){
 
   const sub=subtotal();
   const ship = sub===0?0 : (sub>=FREE_SHIP?0:SHIP_FEE);
+  let saved=0; for(const [id,q] of cart){ const p=byId(id); saved+=(p.ref-p.price)*q; }
   $("sumItems").textContent = won(sub);
+  $("sumSave").textContent = saved>0 ? "-"+won(saved) : "0원";
   $("sumShip").innerHTML = sub>=FREE_SHIP && sub>0 ? `<span class="free">무료!</span>` : won(ship);
   $("sumTotal").textContent = won(sub+ship);
 
