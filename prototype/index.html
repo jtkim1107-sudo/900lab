@@ -278,12 +278,11 @@ header{
 .card.soldout:hover{transform:none;box-shadow:none}
 .thumb{
   aspect-ratio:1/1;
-  display:flex;align-items:center;justify-content:center;
-  font-size:56px;
   border-bottom:2px solid var(--ink);
   user-select:none;
+  background:var(--paper);
 }
-.thumb span{filter:drop-shadow(0 6px 8px rgba(25,23,19,0.18))}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .price-sticker{
   position:absolute;top:10px;left:10px;
   font-size:13px;font-weight:900;letter-spacing:-0.2px;
@@ -314,12 +313,13 @@ header{
 .p-was s{text-decoration:line-through}
 .p-off{font-style:normal;font-size:13px;color:var(--punch);font-weight:900;margin-left:2px}
 .p-meta{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
-.p-price{font-size:18px;font-weight:900;letter-spacing:-0.5px}
+.p-price{font-size:18px;font-weight:900;letter-spacing:-0.5px;white-space:nowrap}
+.p-stock{white-space:nowrap}
 .p-cmp{
   font-size:11.5px;font-weight:700;color:var(--go);
   background:var(--go-soft);border-radius:6px;
   padding:3px 8px;margin-top:-2px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  line-height:1.4;
 }
 .p-stock{font-size:12px;color:var(--muted)}
 .p-stock.low{color:var(--punch);font-weight:700}
@@ -432,7 +432,11 @@ header{
   background:var(--card);border:1.5px solid var(--ink);border-radius:11px;
   padding:10px;
 }
-.cart-emoji{font-size:27px;flex:0 0 auto;filter:drop-shadow(0 3px 4px rgba(25,23,19,0.15))}
+.cart-thumb{
+  width:46px;height:46px;flex:0 0 auto;
+  border-radius:9px;border:1.5px solid var(--line);
+  object-fit:cover;display:block;
+}
 .cart-info{flex:1;min-width:0}
 .cart-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cart-price{font-size:12.5px;color:var(--muted)}
@@ -742,6 +746,82 @@ const PRODUCTS = [
   {id:24,name:"프라이팬 정리 랙",               price:4900, ref:12900, cmp:9950,  stock:31,  emoji:"🍳", hue:"#FDF1DC"},
 ];
 
+/* ============ 상품 사진 생성 (시연용 플레이스홀더) ============
+   실제 오픈 시 이 블록을 지우고 PRODUCTS의 img에 실제 촬영컷 URL을
+   넣으면 됩니다. 여기서는 상품마다 시드 랜덤으로 배경·조명·그림자가
+   다른 스튜디오풍 사진을 캔버스로 만들어 data URI로 씁니다. */
+function seededRand(seed){
+  let t = seed * 0x6D2B79F5;
+  return function(){
+    t += 0x6D2B79F5;
+    let r = Math.imul(t ^ (t >>> 15), 1 | t);
+    r ^= r + Math.imul(r ^ (r >>> 7), 61 | r);
+    return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function shade(hex, amt){
+  const n = parseInt(hex.slice(1), 16);
+  const f = v => Math.max(0, Math.min(255, v + amt));
+  return `rgb(${f(n>>16)},${f((n>>8)&255)},${f(n&255)})`;
+}
+function makePhoto(p){
+  const r = seededRand(p.id * 7919);
+  const c = document.createElement("canvas");
+  c.width = c.height = 480;
+  const x = c.getContext("2d");
+
+  // 배경: 페이퍼 스튜디오 그라데이션
+  const g = x.createLinearGradient(0, 0, 0, 480);
+  g.addColorStop(0, shade(p.hue, 20));
+  g.addColorStop(0.62, p.hue);
+  g.addColorStop(1, shade(p.hue, -16));
+  x.fillStyle = g; x.fillRect(0, 0, 480, 480);
+
+  // 조명 하이라이트 (위치 랜덤)
+  const hx = 130 + r()*160, hy = 80 + r()*70;
+  const h = x.createRadialGradient(hx, hy, 10, hx, hy, 320);
+  h.addColorStop(0, "rgba(255,255,255,0.55)");
+  h.addColorStop(1, "rgba(255,255,255,0)");
+  x.fillStyle = h; x.fillRect(0, 0, 480, 480);
+
+  // 바닥 그림자
+  x.save();
+  if("filter" in x) x.filter = "blur(10px)";
+  x.fillStyle = "rgba(25,23,19,0.20)";
+  x.beginPath();
+  x.ellipse(240, 356, 120 + r()*30, 24, 0, 0, Math.PI*2);
+  x.fill();
+  x.restore();
+
+  // 상품 (각도 랜덤)
+  x.save();
+  x.translate(240, 250);
+  x.rotate((r()*12 - 6) * Math.PI/180);
+  x.font = "215px 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',serif";
+  x.textAlign = "center"; x.textBaseline = "middle";
+  x.shadowColor = "rgba(25,23,19,0.28)";
+  x.shadowBlur = 26; x.shadowOffsetY = 16;
+  x.fillText(p.emoji, 0, -28);
+  x.restore();
+
+  // 필름 그레인
+  x.globalAlpha = 0.05;
+  for(let i = 0; i < 1400; i++){
+    x.fillStyle = r() > 0.5 ? "#fff" : "#000";
+    x.fillRect(r()*480, r()*480, 1, 1);
+  }
+  x.globalAlpha = 1;
+
+  // 비네트
+  const v = x.createRadialGradient(240, 240, 170, 240, 240, 345);
+  v.addColorStop(0, "rgba(0,0,0,0)");
+  v.addColorStop(1, "rgba(25,23,19,0.12)");
+  x.fillStyle = v; x.fillRect(0, 0, 480, 480);
+
+  return c.toDataURL("image/jpeg", 0.85);
+}
+PRODUCTS.forEach(p => p.img = makePhoto(p));
+
 /* ============ 상태 ============ */
 const cart = new Map();        // id -> qty
 let demoSold = 0;              // 시연 중 판매 수량
@@ -799,7 +879,7 @@ function cardHTML(p){
          <button data-inc="${p.id}" aria-label="더 담기" ${avail(p)<=0?"disabled":""}>+</button>
        </div>`;
   return `<article class="card ${out?"soldout":""}">
-    <div class="thumb" style="background:radial-gradient(circle at 32% 26%, rgba(255,255,255,0.75), transparent 62%), ${p.hue}"><span>${p.emoji}</span></div>
+    <div class="thumb"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
     <span class="price-sticker num t${p.price}">${p.price.toLocaleString()}원</span>
     ${low?`<span class="low-flag num">품절임박 ${p.stock}</span>`:""}
     ${out?`<span class="soldout-stamp">SOLD OUT</span>`:""}
@@ -853,7 +933,8 @@ function renderCart(){
   for(const [id,q] of cart){
     const p=byId(id);
     rows.push(`<div class="cart-row">
-      <span class="cart-emoji">${p.emoji}</span>
+      <img class="cart-thumb" src="${p.img}" alt="">
+
       <div class="cart-info">
         <div class="cart-name">${p.name}</div>
         <div class="cart-price num">${won(p.price)} × ${q} = ${won(p.price*q)}</div>
