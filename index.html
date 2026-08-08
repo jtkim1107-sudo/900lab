@@ -243,14 +243,14 @@ header{
 }
 .tabs-in::-webkit-scrollbar{display:none}
 .tab{
-  font-size:13px;font-weight:800;white-space:nowrap;
+  font-size:13px;font-weight:700;white-space:nowrap;
   padding:7px 15px;border-radius:99px;
-  border:1.5px solid var(--ink);background:var(--card);color:var(--ink);
-  transition:transform .1s ease;
+  border:1px solid var(--line);background:var(--card);color:var(--muted);
+  transition:transform .1s ease,border-color .15s ease,color .15s ease;
 }
+.tab:hover{border-color:var(--ink);color:var(--ink)}
 .tab[aria-pressed="true"]{
-  background:var(--ink);color:var(--paper);
-  box-shadow:var(--hard-s);
+  background:var(--ink);border-color:var(--ink);color:var(--paper);font-weight:800;
 }
 .tab[aria-pressed="true"] .cnt{color:var(--tag)}
 .tab:active{transform:translate(1px,1px)}
@@ -260,32 +260,33 @@ header{
 .tab-hot[aria-pressed="true"] .cnt{color:#FFD9CF}
 
 /* ---------- 상품 그리드 (카페24: product/list 모듈 위치) ---------- */
-.grid-wrap{max-width:1080px;margin:0 auto;padding:20px 16px 44px}
+.grid-wrap{max-width:1080px;margin:0 auto;padding:24px 16px 48px}
 .grid{
-  display:grid;gap:16px;
-  grid-template-columns:repeat(auto-fill,minmax(168px,1fr));
+  display:grid;gap:20px 16px;
+  grid-template-columns:repeat(auto-fill,minmax(178px,1fr));
 }
 .card{
   background:var(--card);
-  border:2px solid var(--ink);
-  border-radius:var(--radius);
+  border:1px solid var(--line);
+  border-radius:16px;
   overflow:hidden;
   display:flex;flex-direction:column;
   position:relative;
-  transition:transform .12s ease,box-shadow .12s ease;
+  box-shadow:0 1px 3px rgba(25,23,19,0.05);
+  transition:transform .18s ease,box-shadow .18s ease;
 }
-.card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
-.card.soldout:hover{transform:none;box-shadow:none}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(25,23,19,0.12)}
+.card.soldout:hover{transform:none;box-shadow:0 1px 3px rgba(25,23,19,0.05)}
 .thumb{
   aspect-ratio:1/1;
-  border-bottom:2px solid var(--ink);
   user-select:none;
-  background:var(--paper);
+  background:#FBFAF7;
+  border-bottom:1px solid var(--line);
 }
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .price-sticker{
   position:absolute;top:10px;left:10px;
-  font-size:13px;font-weight:900;letter-spacing:-0.2px;
+  font-size:12.5px;font-weight:900;letter-spacing:-0.2px;
   background:var(--tag);color:var(--ink);
   padding:4px 10px 4px 18px;border-radius:5px;
   box-shadow:var(--hard-s);
@@ -307,36 +308,29 @@ header{
   padding:3px 9px;border-radius:99px;
   box-shadow:var(--hard-s);
 }
-.card-body{padding:13px;display:flex;flex-direction:column;gap:7px;flex:1}
-.p-brand{font-size:10.5px;font-weight:800;letter-spacing:0.14em;color:var(--muted)}
-.p-name{font-size:13.5px;font-weight:600;line-height:1.35;flex:1}
-.p-was{font-size:11.5px;color:var(--muted);margin-bottom:-3px}
+.card-body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.p-name{font-size:13.5px;font-weight:600;line-height:1.4;flex:1;color:var(--ink)}
+.p-was{font-size:11.5px;color:var(--muted);margin-bottom:-4px}
 .p-was s{text-decoration:line-through}
-.p-off{font-style:normal;font-size:13px;color:var(--punch);font-weight:900;margin-left:2px}
+.p-off{font-style:normal;font-size:13px;color:var(--punch);font-weight:900;margin-left:3px}
 .p-meta{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
-.p-price{font-size:18px;font-weight:900;letter-spacing:-0.5px;white-space:nowrap}
+.p-price{font-size:19px;font-weight:900;letter-spacing:-0.5px;white-space:nowrap}
 .p-stock{white-space:nowrap}
-.p-cmp{
-  font-size:11.5px;font-weight:700;color:var(--go);
-  background:var(--go-soft);border-radius:6px;
-  padding:3px 8px;margin-top:-2px;
-  line-height:1.4;
-}
-.p-cmp.alt{background:var(--paper);color:var(--muted);border:1px dashed var(--line)}
+.p-cmp{font-size:11.5px;font-weight:700;color:var(--go);line-height:1.4;margin-top:-3px}
+.p-cmp.alt{color:var(--muted);font-weight:600}
 .p-stock{font-size:12px;color:var(--muted)}
 .p-stock.low{color:var(--punch);font-weight:700}
 .add-btn{
   background:var(--ink);color:var(--paper);
   font-size:13.5px;font-weight:800;
-  padding:10px 0;border-radius:9px;
-  box-shadow:var(--hard-s);
-  transition:transform .1s ease,box-shadow .1s ease;
+  padding:11px 0;border-radius:11px;
+  transition:background .15s ease,transform .1s ease;
 }
-.add-btn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--ink)}
+.add-btn:hover{background:#33302A}
+.add-btn:active{transform:scale(0.97)}
 .stepper{
   display:flex;align-items:center;
-  border:2px solid var(--ink);border-radius:9px;overflow:hidden;
-  box-shadow:var(--hard-s);
+  border:1.5px solid var(--ink);border-radius:11px;overflow:hidden;
 }
 .stepper button{
   flex:0 0 40px;padding:8px 0;font-size:16px;font-weight:900;
@@ -344,16 +338,14 @@ header{
 }
 .stepper button:disabled{opacity:0.35;cursor:default}
 .stepper .qty{flex:1;text-align:center;font-weight:900;font-size:15px}
-.card.soldout{border-color:var(--line)}
-.card.soldout .thumb{border-color:var(--line)}
 .card.soldout .thumb,.card.soldout .card-body{opacity:0.38;filter:grayscale(0.6)}
 .soldout-stamp{
   position:absolute;top:46%;left:50%;
-  transform:translate(-50%,-50%) rotate(-12deg);
-  font-size:19px;font-weight:900;letter-spacing:0.14em;
+  transform:translate(-50%,-50%) rotate(-10deg);
+  font-size:16px;font-weight:900;letter-spacing:0.14em;
   color:var(--punch);
-  border:3px double var(--punch);border-radius:7px;
-  padding:5px 14px;background:rgba(255,255,255,0.88);
+  border:2.5px double var(--punch);border-radius:7px;
+  padding:4px 12px;background:rgba(255,255,255,0.88);
   pointer-events:none;
   mix-blend-mode:multiply;
 }
@@ -431,8 +423,9 @@ header{
 .drawer-list{flex:1;overflow-y:auto;padding:13px 16px;display:flex;flex-direction:column;gap:10px}
 .cart-row{
   display:flex;align-items:center;gap:10px;
-  background:var(--card);border:1.5px solid var(--ink);border-radius:11px;
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
   padding:10px;
+  box-shadow:0 1px 3px rgba(25,23,19,0.05);
 }
 .cart-thumb{
   width:46px;height:46px;flex:0 0 auto;
@@ -975,8 +968,6 @@ const TABS = [
   {key:"p1900",  label:"1,900원관"},
   {key:"p2900",  label:"2,900원관"},
   {key:"p4900",  label:"4,900원관"},
-  {key:"mono",   label:"모노플랫"},
-  {key:"eltree", label:"엘트리"},
   {key:"low",    label:"품절임박", hot:true},
 ];
 function matches(p,key){
@@ -984,8 +975,6 @@ function matches(p,key){
   if(key==="p1900")  return p.price===1900;
   if(key==="p2900")  return p.price===2900;
   if(key==="p4900")  return p.price===4900;
-  if(key==="mono")   return p.brand==="MONOFLAT";
-  if(key==="eltree") return p.brand==="ELTREE";
   if(key==="low")    return p.stock>0 && p.stock<10;
   return true;
 }
@@ -1019,16 +1008,13 @@ function cardHTML(p){
     ${low?`<span class="low-flag num">품절임박 ${p.stock}</span>`:""}
     ${out?`<span class="soldout-stamp">SOLD OUT</span>`:""}
     <div class="card-body">
-      <div class="p-brand">${p.brand}</div>
       <div class="p-name">${p.name}</div>
       ${p.mall?`<div class="p-was num">정가 <s>${won(p.rrp)}</s></div>`:""}
       <div class="p-meta">
         <span class="p-price num">${won(p.price)}${p.mall?`<em class="p-off num">-${Math.round((1-p.price/p.mall)*100)}%</em>`:""}</span>
         <span class="p-stock num ${low?"low":""}">${out?"소진 완료":"남은 수량 "+p.stock}</span>
       </div>
-      ${p.mall
-        ? `<div class="p-cmp num">공식몰 ${won(p.mall)}보다 ${won(p.mall-p.price)}↓</div>`
-        : `<div class="p-cmp alt">파트너스 B2B 전용 · 시중가 비공개</div>`}
+      ${p.mall ? `<div class="p-cmp num">공식몰 ${won(p.mall)}보다 ${won(p.mall-p.price)}↓</div>` : ""}
       ${ctrl}
     </div>
   </article>`;
