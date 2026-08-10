@@ -1,0 +1,456 @@
+<title>TALTAL FACTORY — 브랜드 디자인 보드</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --paper:#F6F4EE;
+  --card:#FFFFFF;
+  --ink:#191713;
+  --muted:#7C766B;
+  --line:#E3DFD4;
+  --tag:#FFD23F;
+  --tag-deep:#E9B914;
+  --punch:#E5472D;
+  --go:#178A50;
+  --go-soft:#E3F2E9;
+  --hard:3px 3px 0 var(--ink);
+  --hard-s:2px 2px 0 var(--ink);
+  --font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:var(--font);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.55;
+}
+.num{font-variant-numeric:tabular-nums}
+
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px 80px}
+
+/* 보드 헤더 */
+.board-head{
+  padding:52px 0 36px;
+  border-bottom:2px solid var(--ink);
+  margin-bottom:44px;
+}
+.eyebrow{
+  font-size:12px;font-weight:800;letter-spacing:0.22em;color:var(--muted);
+  margin-bottom:12px;
+}
+.board-head h1{
+  font-size:clamp(28px,4.5vw,42px);font-weight:900;letter-spacing:-1px;line-height:1.2;
+  text-wrap:balance;
+}
+.board-head h1 em{
+  font-style:normal;background:var(--tag);padding:0 10px 2px;border-radius:6px;
+  box-shadow:var(--hard-s);display:inline-block;transform:rotate(-1.2deg);
+}
+.board-head p{margin-top:14px;color:var(--muted);font-size:14.5px;max-width:40em}
+
+/* 섹션 공통 */
+section{margin-bottom:56px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+.sec-no{
+  font-size:13px;font-weight:900;color:var(--paper);
+  background:var(--ink);border-radius:99px;
+  width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;
+  flex:0 0 auto;position:relative;top:3px;
+}
+.sec-head h2{font-size:22px;font-weight:900;letter-spacing:-0.5px}
+.sec-desc{color:var(--muted);font-size:13.5px;margin-bottom:22px;max-width:44em}
+
+/* 로고 시안 */
+.logo-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.logo-card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  overflow:hidden;box-shadow:0 1px 3px rgba(25,23,19,0.05);
+  display:flex;flex-direction:column;
+}
+.logo-stage{
+  height:190px;display:flex;align-items:center;justify-content:center;
+  border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255,255,255,0.8), transparent 60%),
+    #F1EEE6;
+}
+.logo-note{padding:16px 18px}
+.logo-note b{font-size:14.5px;font-weight:800;display:block;margin-bottom:3px}
+.logo-note b .pick{
+  font-size:11px;font-weight:900;color:var(--card);background:var(--punch);
+  border-radius:99px;padding:2px 9px;margin-left:7px;vertical-align:2px;letter-spacing:0.04em;
+}
+.logo-note p{font-size:12.5px;color:var(--muted)}
+
+/* A안: 스티커 워드마크 */
+.lg-a{display:flex;align-items:center;gap:9px}
+.lg-a .stk{
+  background:var(--tag);color:var(--ink);
+  font-size:34px;font-weight:900;letter-spacing:-1px;
+  padding:4px 14px 6px;border-radius:8px;
+  box-shadow:var(--hard);
+  transform:rotate(-2deg);display:inline-block;
+}
+.lg-a .rest{font-size:34px;font-weight:900;letter-spacing:-0.5px}
+
+/* B안: 가격표 태그 */
+.lg-b{position:relative;transform:rotate(-4deg)}
+.lg-b .tag-body{
+  background:var(--tag);
+  border:2.5px solid var(--ink);
+  border-radius:10px 16px 16px 10px;
+  padding:16px 26px 18px 38px;
+  box-shadow:var(--hard);
+  position:relative;
+}
+.lg-b .hole{
+  position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  width:13px;height:13px;border-radius:99px;
+  background:#F1EEE6;border:2.5px solid var(--ink);
+}
+.lg-b .t1{font-size:32px;font-weight:900;letter-spacing:-1px;line-height:1}
+.lg-b .t2{font-size:12px;font-weight:800;letter-spacing:0.34em;margin-top:5px}
+.lg-b .string{
+  position:absolute;left:-26px;top:26%;
+  width:34px;height:26px;
+  border:2.5px solid var(--ink);border-right:none;border-bottom:none;
+  border-radius:18px 0 0 0;
+  transform:rotate(-18deg);
+}
+
+/* C안: 검수 도장 */
+.lg-c{
+  border:3.5px double var(--punch);
+  color:var(--punch);
+  border-radius:12px;
+  padding:14px 26px;
+  transform:rotate(-7deg);
+  text-align:center;
+  mix-blend-mode:multiply;
+  background:rgba(255,255,255,0.5);
+}
+.lg-c .t1{font-size:40px;font-weight:900;letter-spacing:0.1em;line-height:1.05}
+.lg-c .t2{font-size:11.5px;font-weight:800;letter-spacing:0.42em;margin-top:6px;text-indent:0.42em}
+
+/* 컬러 */
+.swatches{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.sw{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  box-shadow:0 1px 3px rgba(25,23,19,0.05);
+}
+.sw-chip{height:86px;position:relative}
+.sw-chip.bordered{border-bottom:1px solid var(--line)}
+.sw-body{padding:12px 14px}
+.sw-body b{font-size:13.5px;font-weight:800;display:block}
+.sw-hex{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:0.04em}
+.sw-use{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.5}
+
+/* 타이포 */
+.type-card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:26px 26px 20px;box-shadow:0 1px 3px rgba(25,23,19,0.05);
+}
+.type-row{display:flex;align-items:baseline;gap:18px;padding:13px 0;border-bottom:1px dashed var(--line);flex-wrap:wrap}
+.type-row:last-child{border-bottom:none}
+.type-spec{flex:0 0 168px;font-size:11.5px;color:var(--muted);font-weight:700;letter-spacing:0.05em}
+.t-disp{font-size:34px;font-weight:900;letter-spacing:-1px}
+.t-h2{font-size:21px;font-weight:900;letter-spacing:-0.4px}
+.t-price{font-size:20px;font-weight:900;letter-spacing:-0.5px}
+.t-price em{font-style:normal;font-size:13px;color:var(--punch);font-weight:900;margin-left:3px}
+.t-body{font-size:14px;font-weight:500}
+.t-cap{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:0.08em}
+
+/* 컴포넌트 */
+.comp-card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:24px;box-shadow:0 1px 3px rgba(25,23,19,0.05);
+  display:flex;flex-wrap:wrap;gap:26px;align-items:center;
+}
+.comp{display:flex;flex-direction:column;gap:9px;align-items:flex-start}
+.comp-label{font-size:11px;font-weight:800;letter-spacing:0.12em;color:var(--muted)}
+.pstk{
+  font-size:13px;font-weight:900;
+  background:var(--tag);color:var(--ink);
+  padding:4px 10px 4px 18px;border-radius:5px;
+  box-shadow:var(--hard-s);position:relative;display:inline-block;transform:rotate(-2deg);
+}
+.pstk::before{
+  content:"";position:absolute;left:7px;top:50%;
+  width:5px;height:5px;border-radius:99px;transform:translateY(-50%);
+  background:var(--card);box-shadow:inset 0 0 0 1.5px var(--ink);
+}
+.pstk.w{background:var(--card)}
+.pstk.m{background:var(--go-soft)}
+.pstk.r{background:var(--punch);color:#fff}
+.stk-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn-demo{
+  background:var(--ink);color:var(--paper);font-family:inherit;
+  font-size:13.5px;font-weight:800;padding:11px 26px;border-radius:11px;border:none;
+}
+.badge-low{font-size:11px;font-weight:800;background:var(--punch);color:#fff;padding:3px 9px;border-radius:99px;box-shadow:var(--hard-s)}
+.badge-out{
+  font-size:13px;font-weight:900;letter-spacing:0.14em;color:var(--punch);
+  border:2.5px double var(--punch);border-radius:7px;padding:3px 11px;
+  transform:rotate(-6deg);display:inline-block;
+}
+.gauge-demo{width:230px}
+.gauge-demo .msg{font-size:12px;font-weight:700;margin-bottom:7px}
+.gauge-demo .msg b{color:var(--punch)}
+.gauge-demo .track{position:relative;height:9px;border-radius:99px;background:var(--paper);border:1px solid var(--line)}
+.gauge-demo .fill{
+  width:62%;height:100%;border-radius:99px;
+  background:repeating-linear-gradient(-45deg,var(--punch) 0 7px,#C93A24 7px 14px);
+}
+.gauge-demo .truck{position:absolute;left:62%;top:-15px;font-size:15px;transform:translateX(-50%) scaleX(-1)}
+
+/* 응용 */
+.apps{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.app-card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  box-shadow:0 1px 3px rgba(25,23,19,0.05);
+}
+.app-label{padding:13px 16px;font-size:12.5px;font-weight:800;letter-spacing:0.06em;border-bottom:1px solid var(--line)}
+
+/* OG 배너 */
+.og{
+  aspect-ratio:1200/630;position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse 90% 70% at 85% 8%, rgba(255,210,63,0.3), transparent 60%),
+    var(--paper);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:8% 7%;
+}
+.og .mk{
+  position:absolute;right:-4%;top:-14%;
+  font-size:11em;font-weight:900;letter-spacing:-0.06em;
+  color:transparent;-webkit-text-stroke:2px rgba(25,23,19,0.08);
+  line-height:1;pointer-events:none;
+}
+.og .brand{display:flex;align-items:center;gap:6px;margin-bottom:5%}
+.og .brand .stk{
+  background:var(--tag);font-size:1.35em;font-weight:900;letter-spacing:-0.02em;
+  padding:1px 9px 3px;border-radius:6px;box-shadow:var(--hard-s);transform:rotate(-2deg);
+}
+.og .brand .rest{font-size:1.35em;font-weight:900}
+.og h3{font-size:2.15em;font-weight:900;letter-spacing:-0.03em;line-height:1.16;position:relative}
+.og h3 .u{box-shadow:inset 0 -0.4em var(--tag)}
+.og .sub{margin-top:4%;font-size:0.95em;font-weight:600;color:var(--muted)}
+.og .stamp{
+  position:absolute;right:6%;bottom:9%;
+  border:3px double var(--punch);color:var(--punch);border-radius:9px;
+  font-size:0.95em;font-weight:900;letter-spacing:0.06em;
+  padding:5px 13px;transform:rotate(6deg);
+}
+
+/* 박스테이프 */
+.tape-stage{padding:34px 0;background:#F1EEE6;display:flex;flex-direction:column;gap:14px}
+.tape{
+  background:var(--tag);border-top:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink);
+  padding:8px 0;overflow:hidden;white-space:nowrap;transform:rotate(-2deg) scale(1.04);
+}
+.tape span{font-size:14px;font-weight:900;letter-spacing:0.1em}
+.tape.dark{background:var(--ink);transform:rotate(1.4deg) scale(1.04)}
+.tape.dark span{color:var(--tag)}
+
+/* 프로필/파비콘 */
+.icon-stage{padding:30px 16px;display:flex;gap:26px;align-items:center;justify-content:center;flex-wrap:wrap;background:#F1EEE6}
+.pf{
+  width:96px;height:96px;border-radius:99px;
+  background:var(--tag);border:3px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;font-weight:900;letter-spacing:-1.5px;
+  box-shadow:var(--hard);
+}
+.pf-sq{
+  width:96px;height:96px;border-radius:22px;
+  background:var(--ink);color:var(--tag);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;font-weight:900;letter-spacing:-1.5px;
+  box-shadow:var(--hard);
+}
+.pf-mini{display:flex;flex-direction:column;gap:8px;align-items:center}
+.pf-mini .s32{width:32px;height:32px;border-radius:8px;background:var(--tag);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900}
+.pf-mini .s16{width:16px;height:16px;border-radius:4px;background:var(--tag);border:1.5px solid var(--ink)}
+.pf-mini .cap{font-size:10.5px;color:var(--muted);font-weight:700}
+
+/* 다음 단계 */
+.next{
+  background:var(--ink);color:var(--paper);
+  border-radius:18px;padding:28px 26px;
+  box-shadow:var(--hard);
+}
+.next h2{font-size:20px;font-weight:900;margin-bottom:14px}
+.next h2 em{font-style:normal;color:var(--tag)}
+.next ol{list-style:none;display:grid;gap:10px}
+.next li{display:flex;gap:11px;font-size:14px;align-items:baseline}
+.next li b{color:var(--tag);font-weight:900;flex:0 0 auto}
+.next li span{color:rgba(246,244,238,0.85)}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+
+  <header class="board-head">
+    <div class="eyebrow">BRAND DESIGN BOARD · V1 · 2026.08</div>
+    <h1><em>TALTAL</em> FACTORY<br>브랜드 디자인 보드</h1>
+    <p>리파코 균일가샵 탈탈팩토리의 시각 아이덴티티 제안입니다. 로고 방향을 고르시면 사이트·카페24 스킨·패키징·SNS까지 이 시스템 하나로 일관되게 적용합니다.</p>
+  </header>
+
+  <!-- 1. 로고 -->
+  <section>
+    <div class="sec-head"><span class="sec-no">1</span><h2>로고 시안</h2></div>
+    <p class="sec-desc">셋 다 "창고에서 갓 붙인 가격표"라는 같은 세계관 안에 있습니다. 하나를 주(主)로 쓰고 나머지를 보조 그래픽으로 함께 쓰는 것도 가능합니다.</p>
+    <div class="logo-grid">
+      <div class="logo-card">
+        <div class="logo-stage">
+          <div class="lg-a"><span class="stk">TALTAL</span><span class="rest">FACTORY</span></div>
+        </div>
+        <div class="logo-note">
+          <b>A안 · 스티커 워드마크<span class="pick">추천</span></b>
+          <p>현재 사이트 헤더의 정제판. 어디에 놓아도 읽히고, 가로형이라 웹 헤더·포장 라벨에 가장 실용적입니다.</p>
+        </div>
+      </div>
+      <div class="logo-card">
+        <div class="logo-stage">
+          <div class="lg-b">
+            <span class="string"></span>
+            <div class="tag-body">
+              <span class="hole"></span>
+              <div class="t1">탈탈</div>
+              <div class="t2">FACTORY</div>
+            </div>
+          </div>
+        </div>
+        <div class="logo-note">
+          <b>B안 · 가격표 태그</b>
+          <p>실이 달린 가격표 실루엣 그 자체를 심벌로. 앱 아이콘·스탬프·굿즈에 강하고, 한글 "탈탈"이 주인공입니다.</p>
+        </div>
+      </div>
+      <div class="logo-card">
+        <div class="logo-stage">
+          <div class="lg-c">
+            <div class="t1">탈탈</div>
+            <div class="t2">TALTAL FACTORY</div>
+          </div>
+        </div>
+        <div class="logo-note">
+          <b>C안 · 검수 도장</b>
+          <p>창고 검수 도장 무드. 메인 로고보다는 SOLD OUT 도장과 짝을 이루는 보조 그래픽·포장 스탬프로 좋습니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 컬러 -->
+  <section>
+    <div class="sec-head"><span class="sec-no">2</span><h2>컬러 시스템</h2></div>
+    <p class="sec-desc">프로토타입에서 이미 검증된 5색. 노랑은 "가격·혜택"에만, 빨강은 "긴급·품절"에만, 초록은 "달성·절약"에만 씁니다 — 색이 곧 정보가 되도록.</p>
+    <div class="swatches">
+      <div class="sw"><div class="sw-chip" style="background:#F6F4EE"></div><div class="sw-body" style="border-top:1px solid var(--line)"><b>Paper</b><span class="sw-hex">#F6F4EE</span><p class="sw-use">바탕. 따뜻한 크라프트 느낌의 종이색</p></div></div>
+      <div class="sw"><div class="sw-chip" style="background:#191713"></div><div class="sw-body"><b>Ink</b><span class="sw-hex">#191713</span><p class="sw-use">텍스트·버튼·전광판. 잉크 블랙</p></div></div>
+      <div class="sw"><div class="sw-chip" style="background:#FFD23F"></div><div class="sw-body"><b>Tag Yellow</b><span class="sw-hex">#FFD23F</span><p class="sw-use">브랜드 컬러. 가격 스티커·로고·혜택 강조</p></div></div>
+      <div class="sw"><div class="sw-chip" style="background:#E5472D"></div><div class="sw-body"><b>Punch Red</b><span class="sw-hex">#E5472D</span><p class="sw-use">품절임박·SOLD OUT·게이지 미달성</p></div></div>
+      <div class="sw"><div class="sw-chip" style="background:#178A50"></div><div class="sw-body"><b>Go Green</b><span class="sw-hex">#178A50</span><p class="sw-use">무료배송 달성·아낀 금액</p></div></div>
+    </div>
+  </section>
+
+  <!-- 3. 타이포 -->
+  <section>
+    <div class="sec-head"><span class="sec-no">3</span><h2>타이포그래피</h2></div>
+    <p class="sec-desc">Pretendard 한 벌로 통일 — 무게 차이만으로 위계를 만듭니다. 숫자는 항상 tabular로 줄 맞춤.</p>
+    <div class="type-card">
+      <div class="type-row"><span class="type-spec">DISPLAY · 900 · -1px</span><span class="t-disp">가격은 네 가지면 됩니다</span></div>
+      <div class="type-row"><span class="type-spec">HEADING · 900 · -0.4px</span><span class="t-h2">왜 이 가격이 가능하냐면요</span></div>
+      <div class="type-row"><span class="type-spec">PRICE · 900 · tabular</span><span class="t-price num">4,900원<em>-59%</em></span></div>
+      <div class="type-row"><span class="type-spec">BODY · 500</span><span class="t-body">리파코 창고에서 바로 보내는 균일가샵. 소진전 상품은 지금 수량이 마지막이에요.</span></div>
+      <div class="type-row"><span class="type-spec">CAPTION · 700 · +0.08em</span><span class="t-cap">재고 소진전 LIVE · 이번 물량</span></div>
+    </div>
+  </section>
+
+  <!-- 4. 컴포넌트 -->
+  <section>
+    <div class="sec-head"><span class="sec-no">4</span><h2>코어 컴포넌트</h2></div>
+    <p class="sec-desc">사이트의 개성을 만드는 부품들. 카페24 스킨으로 이식할 때도 이 모양 그대로 갑니다.</p>
+    <div class="comp-card">
+      <div class="comp">
+        <span class="comp-label">가격 스티커 · 4단 균일가</span>
+        <div class="stk-row">
+          <span class="pstk num">900원</span>
+          <span class="pstk w num">1,900원</span>
+          <span class="pstk m num">2,900원</span>
+          <span class="pstk r num">4,900원</span>
+        </div>
+      </div>
+      <div class="comp">
+        <span class="comp-label">버튼</span>
+        <button class="btn-demo">담기 +</button>
+      </div>
+      <div class="comp">
+        <span class="comp-label">뱃지</span>
+        <div class="stk-row">
+          <span class="badge-low num">품절임박 4</span>
+          <span class="badge-out">SOLD OUT</span>
+        </div>
+      </div>
+      <div class="comp">
+        <span class="comp-label">무료배송 게이지</span>
+        <div class="gauge-demo">
+          <div class="msg">무료배송까지 <b class="num">3,700원</b> 남았어요</div>
+          <div class="track"><div class="fill"></div><span class="truck">🚚</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 응용 -->
+  <section>
+    <div class="sec-head"><span class="sec-no">5</span><h2>응용 시안</h2></div>
+    <p class="sec-desc">같은 시스템이 링크 미리보기, 택배 상자, 프로필로 확장됐을 때의 모습입니다.</p>
+    <div class="apps">
+      <div class="app-card" style="grid-column:1/-1">
+        <div class="app-label">오픈그래프 배너 — 링크 공유 시 미리보기 (1200×630)</div>
+        <div class="og" style="font-size:clamp(10px,1.9vw,20px)">
+          <div class="mk num">₩900</div>
+          <div class="brand"><span class="stk">TALTAL</span><span class="rest">FACTORY</span></div>
+          <h3>가격은 네 가지면 됩니다<br><span class="u">900 · 1,900 · 2,900 · 4,900원</span></h3>
+          <div class="sub">리파코 창고에서 바로 보내는 균일가샵 · 9,800원 이상 무료배송</div>
+          <div class="stamp">원가 방출</div>
+        </div>
+      </div>
+      <div class="app-card">
+        <div class="app-label">택배 박스테이프</div>
+        <div class="tape-stage">
+          <div class="tape"><span>TALTAL FACTORY&nbsp;&nbsp;⚡&nbsp;&nbsp;탈탈 털어 보냈습니다&nbsp;&nbsp;⚡&nbsp;&nbsp;TALTAL FACTORY&nbsp;&nbsp;⚡&nbsp;&nbsp;탈탈 털어 보냈습니다&nbsp;&nbsp;⚡&nbsp;&nbsp;TALTAL FACTORY</span></div>
+          <div class="tape dark"><span>900 · 1,900 · 2,900 · 4,900&nbsp;&nbsp;균일가샵&nbsp;&nbsp;·&nbsp;&nbsp;900 · 1,900 · 2,900 · 4,900&nbsp;&nbsp;균일가샵&nbsp;&nbsp;·&nbsp;&nbsp;900 · 1,900</span></div>
+        </div>
+      </div>
+      <div class="app-card">
+        <div class="app-label">프로필 · 앱 아이콘 · 파비콘</div>
+        <div class="icon-stage">
+          <div class="pf">탈탈</div>
+          <div class="pf-sq">탈탈</div>
+          <div class="pf-mini">
+            <div class="s32">탈</div>
+            <div class="s16"></div>
+            <span class="cap">32px · 16px</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 다음 단계 -->
+  <section>
+    <div class="next">
+      <h2>결정해주시면 <em>바로 진행</em>합니다</h2>
+      <ol>
+        <li><b>01</b><span>로고 방향 선택 (A/B/C, 조합도 가능) → SVG 원본 파일로 제작해 저장소에 커밋</span></li>
+        <li><b>02</b><span>선택한 로고를 프로토타입 헤더·파비콘·오픈그래프에 적용</span></li>
+        <li><b>03</b><span>카페24 스킨 제작 시 이 보드의 토큰(컬러·타이포·컴포넌트)을 그대로 이식</span></li>
+        <li><b>04</b><span>박스테이프·스티커 등 패키징은 인쇄용 시안으로 별도 제작 (원하시면)</span></li>
+      </ol>
+    </div>
+  </section>
+
+</div>
