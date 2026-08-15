@@ -230,6 +230,68 @@ header{
 .cmp-row.is-us .cmp-bar{border-color:var(--ink)}
 .cmp-row.is-us .cmp-bar i{background:var(--tag)}
 
+/* ---------- BEST 섹션 ---------- */
+.best{max-width:1080px;margin:8px auto 0;padding:18px 16px 6px}
+.best-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px}
+.best-head h2{font-size:21px;font-weight:900;letter-spacing:-0.5px}
+.best-head p{font-size:12.5px;color:var(--muted);font-weight:700}
+.best-row{
+  display:flex;gap:14px;overflow-x:auto;
+  padding:6px 2px 16px;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+}
+.best-row::-webkit-scrollbar{display:none}
+.bcard{
+  flex:0 0 232px;scroll-snap-align:start;
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  overflow:hidden;position:relative;
+  box-shadow:0 1px 3px rgba(25,23,19,0.05);
+  transition:transform .18s ease,box-shadow .18s ease;
+  display:flex;flex-direction:column;
+}
+.bcard:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(25,23,19,0.12)}
+.brank{
+  position:absolute;top:9px;left:10px;z-index:2;
+  width:34px;height:34px;border-radius:99px;
+  background:var(--tag);border:2px solid var(--ink);
+  box-shadow:var(--hard-s);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:900;
+  transform:rotate(-6deg);
+}
+.boff{
+  position:absolute;top:12px;right:10px;z-index:2;
+  background:var(--punch);color:#fff;
+  font-size:13px;font-weight:900;
+  padding:4px 10px;border-radius:99px;
+  box-shadow:var(--hard-s);
+}
+.bimg{aspect-ratio:1/1;background:#FBFAF7;border-bottom:1px solid var(--line)}
+.bimg img{width:100%;height:100%;object-fit:cover;display:block}
+.bbody{padding:13px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.bname{
+  font-size:13.5px;font-weight:600;line-height:1.4;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  min-height:2.8em;
+}
+.bwas{font-size:11.5px;color:var(--muted)}
+.bwas s{text-decoration:line-through}
+.bprice{font-size:21px;font-weight:900;letter-spacing:-0.5px}
+.bprice em{font-style:normal;font-size:13px;color:var(--punch);font-weight:900;margin-left:4px}
+.bsold{font-size:12px;font-weight:700;color:var(--punch);margin-bottom:3px}
+.bsold small{color:var(--muted);font-weight:600}
+
+/* 그리드 카드 BEST 표시 */
+.best-flag{
+  position:absolute;top:10px;right:10px;
+  font-size:11px;font-weight:900;letter-spacing:0.04em;
+  background:var(--ink);color:var(--tag);
+  padding:3px 9px;border-radius:99px;
+  box-shadow:var(--hard-s);
+}
+.p-sold{font-size:11.5px;font-weight:700;color:var(--punch);margin-top:-3px}
+
 /* ---------- 필터 탭 (카페24: 상품분류 커스텀) ---------- */
 .tabs{
   position:sticky;top:55px;z-index:30;
@@ -625,6 +687,12 @@ footer{
   </div>
 </section>
 
+<!-- ================= BEST ================= -->
+<section class="best" aria-label="베스트 상품">
+  <div class="best-head"><h2>지금 제일 잘 나가요 🔥</h2><p>오늘 주문 기준 BEST 8</p></div>
+  <div class="best-row" id="bestRow"></div>
+</section>
+
 <!-- ================= 필터 탭 ================= -->
 <nav class="tabs" aria-label="상품 필터">
   <div class="tabs-in" id="tabBar"></div>
@@ -946,6 +1014,23 @@ const PRODUCTS = [
 /* ============ 상품 사진 (모노플랫 공식몰 실촬영컷, base64 임베드) ============ */
 PRODUCTS.forEach(p => p.img = IMGS[p.id]);
 
+/* ============ BEST 큐레이션 (시연용: 판매량은 가정값) ============ */
+const HOT = [
+  ["짐캐리어",            "짐캐리어 접이식 폴딩 카트",        47],
+  ["에펠 3단 트롤리",     "에펠 3단 트롤리 이동식카트",        41],
+  ["대형 빨래바구니",     "대형 빨래바구니 60L (2단 손잡이)",  38],
+  ["냄새차단 쓰레기통",   "듀얼락 냄새차단 쓰레기통 30L",      36],
+  ["6단 사다리",          "6단 사다리 스탠드 행거",            33],
+  ["3단 분리수거함 디자인","3단 분리수거함",                    29],
+  ["스토브 코너",         "스토브 코너 냄비 정리 선반",        26],
+  ["접시 정리 스탠드 2종","접시 정리 스탠드 2종",              24],
+];
+HOT.forEach(([key, disp, sold], i) => {
+  const p = PRODUCTS.find(p => p.name.includes(key));
+  if (p) { p.hot = i + 1; p.sold = sold; p.name = disp; if (p.stock < 15) p.stock += 20; }
+});
+const disc = p => p.mall ? 1 - p.price / p.mall : 0;
+
 /* ============ 상태 ============ */
 const cart = new Map();        // id -> qty
 let demoSold = 0;              // 시연 중 판매 수량
@@ -1005,7 +1090,7 @@ function cardHTML(p){
   return `<article class="card ${out?"soldout":""}">
     <div class="thumb"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
     <span class="price-sticker num t${p.price}">${p.price.toLocaleString()}원</span>
-    ${low?`<span class="low-flag num">품절임박 ${p.stock}</span>`:""}
+    ${p.hot?`<span class="best-flag num">BEST ${p.hot}</span>`:low?`<span class="low-flag num">품절임박 ${p.stock}</span>`:""}
     ${out?`<span class="soldout-stamp">SOLD OUT</span>`:""}
     <div class="card-body">
       <div class="p-name">${p.name}</div>
@@ -1014,17 +1099,42 @@ function cardHTML(p){
         <span class="p-price num">${won(p.price)}${p.mall?`<em class="p-off num">-${Math.round((1-p.price/p.mall)*100)}%</em>`:""}</span>
         <span class="p-stock num ${low?"low":""}">${out?"소진 완료":"남은 수량 "+p.stock}</span>
       </div>
+      ${p.hot ? `<div class="p-sold num">🔥 오늘 ${p.sold}개 팔림</div>` : ""}
       ${p.mall ? `<div class="p-cmp num">공식몰 ${won(p.mall)}보다 ${won(p.mall-p.price)}↓</div>` : ""}
       ${ctrl}
     </div>
   </article>`;
 }
 function renderGrid(){
-  const list = PRODUCTS.filter(p=>matches(p,filter));
+  const list = PRODUCTS.filter(p=>matches(p,filter)).slice().sort((a,b)=>
+    ((a.stock===0)-(b.stock===0)) || ((a.hot||99)-(b.hot||99)) || (disc(b)-disc(a))
+  );
   $("grid").innerHTML = list.length
     ? list.map(cardHTML).join("")
     : `<p class="empty-msg">이 조건의 상품이 다 털렸어요 🎉</p>`;
 }
+function renderBest(){
+  const hots = PRODUCTS.filter(p=>p.hot).sort((a,b)=>a.hot-b.hot);
+  $("bestRow").innerHTML = hots.map(p=>{
+    const q = cart.get(p.id)||0;
+    return `<div class="bcard">
+      <span class="brank num">${p.hot}</span>
+      <span class="boff num">-${Math.round(disc(p)*100)}%</span>
+      <div class="bimg"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
+      <div class="bbody">
+        <div class="bname">${p.name}</div>
+        <div class="bwas num">정가 <s>${won(p.rrp)}</s> · 공식몰 ${won(p.mall)}</div>
+        <div class="bprice num">${won(p.price)}<em>-${Math.round(disc(p)*100)}%</em></div>
+        <div class="bsold num">🔥 오늘 ${p.sold}개 팔림 <small>· 남은 수량 ${p.stock - q}</small></div>
+        <button class="add-btn" data-add="${p.id}" ${p.stock-q<=0?"disabled":""}>${q>0?`담김 ${q} · 더 담기 +`:"담기 +"}</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+$("bestRow").addEventListener("click",e=>{
+  const b=e.target.closest("[data-add]");
+  if(b) changeQty(+b.dataset.add, +1, true);
+});
 $("grid").addEventListener("click",e=>{
   const add=e.target.closest("[data-add]"), inc=e.target.closest("[data-inc]"), dec=e.target.closest("[data-dec]");
   if(add) changeQty(+add.dataset.add, +1, true);
@@ -1122,7 +1232,7 @@ function renderBurn(){
   $("burnPct").textContent=pct.toFixed(1)+"%";
 }
 
-function renderAll(){ renderGrid(); renderCart(); renderGauge(); renderBurn(); }
+function renderAll(){ renderBest(); renderGrid(); renderCart(); renderGauge(); renderBurn(); }
 
 /* ============ 드로어 · 모달 ============ */
 function openDrawer(){ $("drawer").classList.add("show"); $("scrim").classList.add("show"); }
