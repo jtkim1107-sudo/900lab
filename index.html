@@ -296,6 +296,16 @@ header{
 .bsold{font-size:12px;font-weight:700;color:var(--punch);margin-bottom:3px}
 .bsold small{color:var(--muted);font-weight:600}
 
+/* NEW(소싱 신상) 표시 */
+.new-flag{
+  position:absolute;top:10px;right:10px;
+  font-size:11px;font-weight:900;letter-spacing:0.08em;
+  background:var(--go);color:#fff;
+  padding:3px 10px;border-radius:99px;
+  box-shadow:var(--hard-s);
+}
+.fresh-zone{padding-top:26px}
+
 /* 그리드 카드 BEST 표시 */
 .best-flag{
   position:absolute;top:10px;right:10px;
@@ -692,6 +702,15 @@ footer{
   </div>
 </section>
 
+<!-- ================= 소싱 신상 ================= -->
+<section class="daily fresh-zone" aria-label="소싱 신상">
+  <div class="zone-head">
+    <h2>이번 주 새로 들어온 것들 🌍</h2>
+    <p>소싱 루프가 전 세계에서 찾아온 신상 · 테스트 입점 소량 (W35)</p>
+  </div>
+  <div class="grid" id="freshGrid"></div>
+</section>
+
 <!-- ================= 생필품 정번 ================= -->
 <section class="daily" aria-label="생필품 정번">
   <div class="zone-head">
@@ -906,11 +925,59 @@ const PRODUCTS = [
 {id:89,name:"아기 로션 160g 1+1",brand:"AGARD",cat:"baby",price:2900,mall:null,rrp:null,stock:196,daily:1},
 {id:90,name:"생분해 배변봉투 10입",brand:"PETRIUM",cat:"pet",price:900,mall:null,rrp:null,stock:100,daily:1},
 {id:91,name:"반려동물 정수기 필터 10입",brand:"PETRIUM",cat:"pet",price:2900,mall:null,rrp:null,stock:77,daily:1},
-{id:92,name:"고흡수 배변패드 소형 50입",brand:"PETRIUM",cat:"pet",price:2900,mall:null,rrp:null,stock:182,daily:1}
+{id:92,name:"고흡수 배변패드 소형 50입",brand:"PETRIUM",cat:"pet",price:2900,mall:null,rrp:null,stock:182,daily:1},
+{id:93,name:"실리콘 스트레치 리드 6종",brand:"GLOBAL",cat:"kitchen",price:1900,mall:null,rrp:null,stock:34,fresh:1,emoji:"🥣",hue:"#EDF5EC"},
+{id:94,name:"대나무섬유 다회용 행주 10입",brand:"GLOBAL",cat:"kitchen",price:1900,mall:null,rrp:null,stock:40,fresh:1,emoji:"🎍",hue:"#EAF3E6"},
+{id:95,name:"실리콘 배수구 거름망 세트",brand:"GLOBAL",cat:"living",price:900,mall:null,rrp:null,stock:60,fresh:1,emoji:"🚿",hue:"#E5F2F4"},
+{id:96,name:"2-in-1 워터 스프레이 브러시",brand:"GLOBAL",cat:"living",price:4900,mall:null,rrp:null,stock:24,fresh:1,emoji:"💦",hue:"#E8F1FA"},
+{id:97,name:"언더셸프 걸이 바스켓",brand:"GLOBAL",cat:"living",price:1900,mall:null,rrp:null,stock:36,fresh:1,emoji:"🧺",hue:"#F4F0E4"},
+{id:98,name:"미세모 틈새 브러시 5종",brand:"GLOBAL",cat:"living",price:900,mall:null,rrp:null,stock:48,fresh:1,emoji:"🖌️",hue:"#F7EDF2"},
+{id:99,name:"S자 후크 10입",brand:"GLOBAL",cat:"living",price:900,mall:null,rrp:null,stock:80,fresh:1,emoji:"🪝",hue:"#F1EDE9"},
+{id:100,name:"접이식 실리콘 콜랜더",brand:"GLOBAL",cat:"kitchen",price:2900,mall:null,rrp:null,stock:30,fresh:1,emoji:"🍝",hue:"#FDEAE4"},
+{id:101,name:"냉장고 클리어 정리 빈 2P",brand:"GLOBAL",cat:"kitchen",price:4900,mall:null,rrp:null,stock:22,fresh:1,emoji:"🧊",hue:"#E6F0F7"},
+{id:102,name:"실리콘 빨대 + 세척솔 세트",brand:"GLOBAL",cat:"kitchen",price:900,mall:null,rrp:null,stock:45,fresh:1,emoji:"🥤",hue:"#F5ECF6"}
 ];
 
-/* ============ 상품 사진 (모노플랫 공식몰 실촬영컷, base64 임베드) ============ */
-PRODUCTS.forEach(p => p.img = IMGS[p.id]);
+/* ============ 상품 사진 (리파코 실촬영컷 base64 · 소싱 신상은 샘플 도착 전 생성 타일) ============ */
+function seededRand(seed){
+  let t = seed * 0x6D2B79F5;
+  return function(){
+    t += 0x6D2B79F5;
+    let r = Math.imul(t ^ (t >>> 15), 1 | t);
+    r ^= r + Math.imul(r ^ (r >>> 7), 61 | r);
+    return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function shade(hex, amt){
+  const n = parseInt(hex.slice(1), 16);
+  const f = v => Math.max(0, Math.min(255, v + amt));
+  return `rgb(${f(n>>16)},${f((n>>8)&255)},${f(n&255)})`;
+}
+function makePhoto(p){
+  const r = seededRand(p.id * 7919);
+  const c = document.createElement("canvas"); c.width = c.height = 480;
+  const x = c.getContext("2d");
+  const g = x.createLinearGradient(0,0,0,480);
+  g.addColorStop(0, shade(p.hue,20)); g.addColorStop(0.62, p.hue); g.addColorStop(1, shade(p.hue,-16));
+  x.fillStyle = g; x.fillRect(0,0,480,480);
+  const hx = 130+r()*160, hy = 80+r()*70;
+  const h = x.createRadialGradient(hx,hy,10,hx,hy,320);
+  h.addColorStop(0,"rgba(255,255,255,0.55)"); h.addColorStop(1,"rgba(255,255,255,0)");
+  x.fillStyle = h; x.fillRect(0,0,480,480);
+  x.save(); if("filter" in x) x.filter = "blur(10px)";
+  x.fillStyle = "rgba(25,23,19,0.20)";
+  x.beginPath(); x.ellipse(240,356,120+r()*30,24,0,0,Math.PI*2); x.fill(); x.restore();
+  x.save(); x.translate(240,250); x.rotate((r()*12-6)*Math.PI/180);
+  x.font = "215px 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',serif";
+  x.textAlign = "center"; x.textBaseline = "middle";
+  x.shadowColor = "rgba(25,23,19,0.28)"; x.shadowBlur = 26; x.shadowOffsetY = 16;
+  x.fillText(p.emoji, 0, -28); x.restore();
+  const v = x.createRadialGradient(240,240,170,240,240,345);
+  v.addColorStop(0,"rgba(0,0,0,0)"); v.addColorStop(1,"rgba(25,23,19,0.12)");
+  x.fillStyle = v; x.fillRect(0,0,480,480);
+  return c.toDataURL("image/jpeg", 0.85);
+}
+PRODUCTS.forEach(p => p.img = IMGS[p.id] || makePhoto(p));
 
 /* ============ BEST 큐레이션 (시연용: 판매량은 가정값) ============ */
 const HOT = [
@@ -968,7 +1035,7 @@ function matches(p,key){
 }
 function renderTabs(){
   $("tabBar").innerHTML = TABS.map(t=>{
-    const n = PRODUCTS.filter(p=>!p.daily && matches(p,t.key)).length;
+    const n = PRODUCTS.filter(p=>!p.daily && !p.fresh && matches(p,t.key)).length;
     return `<button class="tab ${t.hot?"tab-hot":""}" data-key="${t.key}"
       aria-pressed="${filter===t.key}">${t.label}<span class="cnt num">${n}</span></button>`;
   }).join("");
@@ -993,7 +1060,7 @@ function cardHTML(p){
   return `<article class="card ${out?"soldout":""}">
     <div class="thumb"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
     <span class="price-sticker num t${p.price}">${p.price.toLocaleString()}원</span>
-    ${p.hot?`<span class="best-flag num">BEST ${p.hot}</span>`:low?`<span class="low-flag num">품절임박 ${p.stock}</span>`:""}
+    ${p.fresh?`<span class="new-flag">NEW</span>`:p.hot?`<span class="best-flag num">BEST ${p.hot}</span>`:low?`<span class="low-flag num">품절임박 ${p.stock}</span>`:""}
     ${out?`<span class="soldout-stamp">SOLD OUT</span>`:""}
     <div class="card-body">
       <div class="p-name">${p.name}</div>
@@ -1003,19 +1070,31 @@ function cardHTML(p){
         <span class="p-stock num ${low?"low":""}">${out?"소진 완료":"남은 수량 "+p.stock}</span>
       </div>
       ${p.hot ? `<div class="p-sold num">🔥 오늘 ${p.sold}개 팔림</div>` : ""}
-      ${p.mall ? `<div class="p-cmp num">공식몰 ${won(p.mall)}보다 ${won(p.mall-p.price)}↓</div>` : ""}
+      ${p.mall ? `<div class="p-cmp num">공식몰 ${won(p.mall)}보다 ${won(p.mall-p.price)}↓</div>` : p.fresh ? `<div class="p-cmp alt">글로벌 소싱 · 테스트 입점</div>` : ""}
       ${ctrl}
     </div>
   </article>`;
 }
 function renderGrid(){
-  const list = PRODUCTS.filter(p=>!p.daily && matches(p,filter)).slice().sort((a,b)=>
+  const list = PRODUCTS.filter(p=>!p.daily && !p.fresh && matches(p,filter)).slice().sort((a,b)=>
     ((a.stock===0)-(b.stock===0)) || ((a.hot||99)-(b.hot||99)) || (disc(b)-disc(a))
   );
   $("grid").innerHTML = list.length
     ? list.map(cardHTML).join("")
     : `<p class="empty-msg">이 조건의 상품이 다 털렸어요 🎉</p>`;
 }
+function renderFresh(){
+  const list = PRODUCTS.filter(p=>p.fresh).slice().sort((a,b)=>
+    ((a.stock===0)-(b.stock===0)) || (a.price-b.price)
+  );
+  $("freshGrid").innerHTML = list.map(cardHTML).join("");
+}
+$("freshGrid").addEventListener("click",e=>{
+  const add=e.target.closest("[data-add]"), inc=e.target.closest("[data-inc]"), dec=e.target.closest("[data-dec]");
+  if(add) changeQty(+add.dataset.add, +1, true);
+  else if(inc) changeQty(+inc.dataset.inc, +1, true);
+  else if(dec) changeQty(+dec.dataset.dec, -1);
+});
 function renderDaily(){
   const list = PRODUCTS.filter(p=>p.daily).slice().sort((a,b)=>
     ((a.stock===0)-(b.stock===0)) || (a.price-b.price) || (disc(b)-disc(a))
@@ -1147,7 +1226,7 @@ function renderBurn(){
   $("burnPct").textContent=pct.toFixed(1)+"%";
 }
 
-function renderAll(){ renderDaily(); renderBest(); renderGrid(); renderCart(); renderGauge(); renderBurn(); }
+function renderAll(){ renderFresh(); renderDaily(); renderBest(); renderGrid(); renderCart(); renderGauge(); renderBurn(); }
 
 /* ============ 드로어 · 모달 ============ */
 function openDrawer(){ $("drawer").classList.add("show"); $("scrim").classList.add("show"); }
