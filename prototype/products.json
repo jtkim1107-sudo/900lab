@@ -8,7 +8,8 @@
   "rrp": 54900,
   "stock": 37,
   "file": "photos84/p81.jpg",
-  "id": 1
+  "id": 1,
+  "daily": false
  },
  {
   "name": "에펠 3단 트롤리 이동식카트",
@@ -19,7 +20,8 @@
   "rrp": 59800,
   "stock": 214,
   "file": "photos84/p83.jpg",
-  "id": 2
+  "id": 2,
+  "daily": false
  },
  {
   "name": "대형 빨래바구니 60L (2단 손잡이)",
@@ -30,7 +32,8 @@
   "rrp": 53900,
   "stock": 36,
   "file": "photos84/p80.jpg",
-  "id": 3
+  "id": 3,
+  "daily": false
  },
  {
   "name": "6단 사다리 스탠드 행거",
@@ -41,7 +44,8 @@
   "rrp": 29800,
   "stock": 157,
   "file": "photos84/p66.jpg",
-  "id": 4
+  "id": 4,
+  "daily": false
  },
  {
   "name": "3단 분리수거함",
@@ -52,7 +56,8 @@
   "rrp": 39800,
   "stock": 5,
   "file": "photos84/p73.jpg",
-  "id": 5
+  "id": 5,
+  "daily": false
  },
  {
   "name": "듀얼락 냄새차단 쓰레기통 30L",
@@ -63,7 +68,8 @@
   "rrp": 39800,
   "stock": 167,
   "file": "photos84/p77.jpg",
-  "id": 6
+  "id": 6,
+  "daily": false
  },
  {
   "name": "우든 원터치 쓰레기통 7L",
@@ -74,7 +80,8 @@
   "rrp": 19900,
   "stock": 38,
   "file": "photos84/p57.jpg",
-  "id": 7
+  "id": 7,
+  "daily": false
  },
  {
   "name": "규조토 우산 거치대",
@@ -85,7 +92,8 @@
   "rrp": 24900,
   "stock": 58,
   "file": "photos84/p58.jpg",
-  "id": 8
+  "id": 8,
+  "daily": false
  },
  {
   "name": "히든 서랍 3종 슬라이딩",
@@ -96,7 +104,8 @@
   "rrp": 12900,
   "stock": 158,
   "file": "photos84/p29.jpg",
-  "id": 9
+  "id": 9,
+  "daily": false
  },
  {
   "name": "이동식 트롤리 틈새 수납함 3종",
@@ -107,7 +116,8 @@
   "rrp": 11900,
   "stock": 191,
   "file": "photos84/p27.jpg",
-  "id": 10
+  "id": 10,
+  "daily": false
  },
  {
   "name": "다용도 리모컨 정리함",
@@ -118,7 +128,8 @@
   "rrp": 29900,
   "stock": 43,
   "file": "photos84/p65.jpg",
-  "id": 11
+  "id": 11,
+  "daily": false
  },
  {
   "name": "흰둥이 리빙박스 4종",
@@ -129,7 +140,8 @@
   "rrp": 4900,
   "stock": 7,
   "file": "photos84/p14.jpg",
-  "id": 12
+  "id": 12,
+  "daily": false
  },
  {
   "name": "원목 손잡이 바구니 3종",
@@ -140,7 +152,8 @@
   "rrp": 7900,
   "stock": 212,
   "file": "photos84/p17.jpg",
-  "id": 13
+  "id": 13,
+  "daily": false
  },
  {
   "name": "원형 원목수납함 4종",
@@ -151,7 +164,8 @@
   "rrp": 7900,
   "stock": 5,
   "file": "photos84/p22.jpg",
-  "id": 14
+  "id": 14,
+  "daily": false
  },
  {
   "name": "다용도 정리함 오거나이저",
@@ -162,7 +176,8 @@
   "rrp": 26900,
   "stock": 6,
   "file": "photos84/p61.jpg",
-  "id": 15
+  "id": 15,
+  "daily": false
  },
  {
   "name": "스프레이 밀대걸레 + 패드 3종 세트",
@@ -173,7 +188,8 @@
   "rrp": 28900,
   "stock": 12,
   "file": "photos84/p69.jpg",
-  "id": 16
+  "id": 16,
+  "daily": false
  },
  {
   "name": "테니스공 의자발커버 16입",
@@ -184,7 +200,8 @@
   "rrp": 12900,
   "stock": 70,
   "file": "photos84/p24.jpg",
-  "id": 17
+  "id": 17,
+  "daily": false
  },
  {
   "name": "옷장 제습제 12입",
@@ -195,7 +212,8 @@
   "rrp": 16900,
   "stock": 36,
   "file": "photos84/p52.jpg",
-  "id": 18
+  "id": 18,
+  "daily": true
  },
  {
   "name": "자동센서 거품 핸드워시 디스펜서",
@@ -206,7 +224,8 @@
   "rrp": 39900,
   "stock": 108,
   "file": "photos84/p78.jpg",
-  "id": 19
+  "id": 19,
+  "daily": false
  },
  {
   "name": "모던 수건 스탠드",
@@ -217,7 +236,8 @@
   "rrp": 34900,
   "stock": 3,
   "file": "photos84/p70.jpg",
-  "id": 20
+  "id": 20,
+  "daily": false
  },
  {
   "name": "무타공 욕실선반 3종",
@@ -228,7 +248,8 @@
   "rrp": 7900,
   "stock": 188,
   "file": "photos84/p16.jpg",
-  "id": 21
+  "id": 21,
+  "daily": false
  },
  {
   "name": "원목 포인트 옷걸이 3종",
@@ -239,7 +260,8 @@
   "rrp": 7900,
   "stock": 106,
   "file": "photos84/p20.jpg",
-  "id": 22
+  "id": 22,
+  "daily": false
  },
  {
   "name": "서랍 정리함 4종 키친트레이",
@@ -250,7 +272,8 @@
   "rrp": 4900,
   "stock": 93,
   "file": "photos84/p10.jpg",
-  "id": 23
+  "id": 23,
+  "daily": false
  },
  {
   "name": "접이식 폴딩박스 2종",
@@ -261,7 +284,8 @@
   "rrp": 17900,
   "stock": 31,
   "file": "photos84/p47.jpg",
-  "id": 24
+  "id": 24,
+  "daily": false
  },
  {
   "name": "스토브 코너 냄비 정리 선반",
@@ -272,7 +296,8 @@
   "rrp": 14900,
   "stock": 22,
   "file": "photos84/p32.jpg",
-  "id": 25
+  "id": 25,
+  "daily": false
  },
  {
   "name": "접시 정리 스탠드 2종",
@@ -283,7 +308,8 @@
   "rrp": 9900,
   "stock": 67,
   "file": "photos84/p23.jpg",
-  "id": 26
+  "id": 26,
+  "daily": false
  },
  {
   "name": "접시 정리대",
@@ -294,7 +320,8 @@
   "rrp": 12900,
   "stock": 4,
   "file": "photos84/p31.jpg",
-  "id": 27
+  "id": 27,
+  "daily": false
  },
  {
   "name": "확장형 2단 그릇 정리대",
@@ -305,7 +332,8 @@
   "rrp": 14900,
   "stock": 6,
   "file": "photos84/p37.jpg",
-  "id": 28
+  "id": 28,
+  "daily": false
  },
  {
   "name": "무타공 칼꽂이",
@@ -316,7 +344,8 @@
   "rrp": 19800,
   "stock": 126,
   "file": "photos84/p53.jpg",
-  "id": 29
+  "id": 29,
+  "daily": false
  },
  {
   "name": "무타공 조리도구걸이",
@@ -327,7 +356,8 @@
   "rrp": 19800,
   "stock": 40,
   "file": "photos84/p41.jpg",
-  "id": 30
+  "id": 30,
+  "daily": false
  },
  {
   "name": "무타공 냄비뚜껑 받침대",
@@ -338,7 +368,8 @@
   "rrp": 12900,
   "stock": 55,
   "file": "photos84/p26.jpg",
-  "id": 31
+  "id": 31,
+  "daily": false
  },
  {
   "name": "국자 조리도구 스탠드",
@@ -349,7 +380,8 @@
   "rrp": 12900,
   "stock": 68,
   "file": "photos84/p30.jpg",
-  "id": 32
+  "id": 32,
+  "daily": false
  },
  {
   "name": "싱크대 롤선반 M·L",
@@ -360,7 +392,8 @@
   "rrp": 17900,
   "stock": 120,
   "file": "photos84/p44.jpg",
-  "id": 33
+  "id": 33,
+  "daily": false
  },
  {
   "name": "싱크대 2단 수납 선반 (소)",
@@ -371,7 +404,8 @@
   "rrp": 19900,
   "stock": 89,
   "file": "photos84/p54.jpg",
-  "id": 34
+  "id": 34,
+  "daily": false
  },
  {
   "name": "모던 와인렉",
@@ -382,7 +416,8 @@
   "rrp": 19900,
   "stock": 136,
   "file": "photos84/p55.jpg",
-  "id": 35
+  "id": 35,
+  "daily": false
  },
  {
   "name": "수세미 거치대",
@@ -393,7 +428,8 @@
   "rrp": 19800,
   "stock": 155,
   "file": "photos84/p56.jpg",
-  "id": 36
+  "id": 36,
+  "daily": false
  },
  {
   "name": "싱크대 걸이형 음식물쓰레기통 3L",
@@ -404,7 +440,8 @@
   "rrp": 35000,
   "stock": 169,
   "file": "photos84/p71.jpg",
-  "id": 37
+  "id": 37,
+  "daily": false
  },
  {
   "name": "실리콘 접이식 드라잉매트",
@@ -415,7 +452,8 @@
   "rrp": 14900,
   "stock": 14,
   "file": "photos84/p33.jpg",
-  "id": 38
+  "id": 38,
+  "daily": false
  },
  {
   "name": "펜트리 정리함 5종",
@@ -426,7 +464,8 @@
   "rrp": 3900,
   "stock": 81,
   "file": "photos84/p08.jpg",
-  "id": 39
+  "id": 39,
+  "daily": false
  },
  {
   "name": "아가드 접이식 러닝타워 키친헬퍼",
@@ -437,7 +476,8 @@
   "rrp": null,
   "stock": 167,
   "file": "photos-new/n01.jpg",
-  "id": 40
+  "id": 40,
+  "daily": false
  },
  {
   "name": "아가드 유아 안전문 (기본형)",
@@ -448,7 +488,8 @@
   "rrp": null,
   "stock": 40,
   "file": "photos-new/n02.jpg",
-  "id": 41
+  "id": 41,
+  "daily": false
  },
  {
   "name": "벌집 에어쿠션 모서리 보호대 2M",
@@ -459,7 +500,8 @@
   "rrp": null,
   "stock": 43,
   "file": "photos-new/n03.jpg",
-  "id": 42
+  "id": 42,
+  "daily": false
  },
  {
   "name": "실리콘 코너보호대 2입",
@@ -470,7 +512,8 @@
   "rrp": null,
   "stock": 49,
   "file": "photos-new/n04.jpg",
-  "id": 43
+  "id": 43,
+  "daily": false
  },
  {
   "name": "다이얼 잠금 콘센트 커버 10입",
@@ -481,7 +524,8 @@
   "rrp": null,
   "stock": 19,
   "file": "photos-new/n05.jpg",
-  "id": 44
+  "id": 44,
+  "daily": false
  },
  {
   "name": "냉장고 안전 잠금장치 2입",
@@ -492,7 +536,8 @@
   "rrp": null,
   "stock": 7,
   "file": "photos-new/n06.jpg",
-  "id": 45
+  "id": 45,
+  "daily": false
  },
  {
   "name": "자석 서랍 잠금장치 6입",
@@ -503,7 +548,8 @@
   "rrp": null,
   "stock": 147,
   "file": "photos-new/n07.jpg",
-  "id": 46
+  "id": 46,
+  "daily": false
  },
  {
   "name": "회전 도어스토퍼 (손끼임방지)",
@@ -514,7 +560,8 @@
   "rrp": null,
   "stock": 146,
   "file": "photos-new/n08.jpg",
-  "id": 47
+  "id": 47,
+  "daily": false
  },
  {
   "name": "디지털 온도측정 접이식 아기 욕조",
@@ -525,7 +572,8 @@
   "rrp": null,
   "stock": 22,
   "file": "photos-new/n09.jpg",
-  "id": 48
+  "id": 48,
+  "daily": false
  },
  {
   "name": "휴대용 핸디 부스터 의자",
@@ -536,7 +584,8 @@
   "rrp": null,
   "stock": 118,
   "file": "photos-new/n10.jpg",
-  "id": 49
+  "id": 49,
+  "daily": false
  },
  {
   "name": "유아 헬멧 (킥보드·자전거)",
@@ -547,7 +596,8 @@
   "rrp": null,
   "stock": 120,
   "file": "photos-new/n11.jpg",
-  "id": 50
+  "id": 50,
+  "daily": false
  },
  {
   "name": "유아 보호대 3종 세트",
@@ -558,7 +608,8 @@
   "rrp": null,
   "stock": 158,
   "file": "photos-new/n12.jpg",
-  "id": 51
+  "id": 51,
+  "daily": false
  },
  {
   "name": "베베 백색소음기 + 수유등",
@@ -569,7 +620,8 @@
   "rrp": null,
   "stock": 111,
   "file": "photos-new/n13.jpg",
-  "id": 52
+  "id": 52,
+  "daily": false
  },
  {
   "name": "유아 교정 젓가락",
@@ -580,7 +632,8 @@
   "rrp": null,
   "stock": 22,
   "file": "photos-new/n14.jpg",
-  "id": 53
+  "id": 53,
+  "daily": false
  },
  {
   "name": "아기 애착 인형",
@@ -591,7 +644,8 @@
   "rrp": null,
   "stock": 87,
   "file": "photos-new/n15.jpg",
-  "id": 54
+  "id": 54,
+  "daily": false
  },
  {
   "name": "말랑 소프트 블럭 80pcs",
@@ -602,7 +656,8 @@
   "rrp": null,
   "stock": 107,
   "file": "photos-new/n16.jpg",
-  "id": 55
+  "id": 55,
+  "daily": false
  },
  {
   "name": "루프탑 캣타워 2단",
@@ -613,7 +668,8 @@
   "rrp": null,
   "stock": 161,
   "file": "photos-new/n17.jpg",
-  "id": 56
+  "id": 56,
+  "daily": false
  },
  {
   "name": "오두막 텐트 스크래쳐 숨숨집",
@@ -624,7 +680,8 @@
   "rrp": null,
   "stock": 127,
   "file": "photos-new/n18.jpg",
-  "id": 57
+  "id": 57,
+  "daily": false
  },
  {
   "name": "바스락 크라프트 숨숨집",
@@ -635,7 +692,8 @@
   "rrp": null,
   "stock": 19,
   "file": "photos-new/n19.jpg",
-  "id": 58
+  "id": 58,
+  "daily": false
  },
  {
   "name": "사계절 양면 방석 (커버분리)",
@@ -646,7 +704,8 @@
   "rrp": null,
   "stock": 66,
   "file": "photos-new/n20.jpg",
-  "id": 59
+  "id": 59,
+  "daily": false
  },
  {
   "name": "말랑쿠션 방석 M",
@@ -657,7 +716,8 @@
   "rrp": null,
   "stock": 91,
   "file": "photos-new/n21.jpg",
-  "id": 60
+  "id": 60,
+  "daily": false
  },
  {
   "name": "편안 하네스 M",
@@ -668,7 +728,8 @@
   "rrp": null,
   "stock": 121,
   "file": "photos-new/n22.jpg",
-  "id": 61
+  "id": 61,
+  "daily": false
  },
  {
   "name": "자동 리드줄 5M",
@@ -679,7 +740,8 @@
   "rrp": null,
   "stock": 145,
   "file": "photos-new/n23.jpg",
-  "id": 62
+  "id": 62,
+  "daily": false
  },
  {
   "name": "고흡수 배변패드 대형 20입",
@@ -690,7 +752,8 @@
   "rrp": null,
   "stock": 96,
   "file": "photos-new/n24.jpg",
-  "id": 63
+  "id": 63,
+  "daily": true
  },
  {
   "name": "논슬립 실리콘 배변매트",
@@ -701,7 +764,8 @@
   "rrp": null,
   "stock": 112,
   "file": "photos-new/n25.jpg",
-  "id": 64
+  "id": 64,
+  "daily": false
  },
  {
   "name": "쇽쇽 노즈워크 매트 M",
@@ -712,7 +776,8 @@
   "rrp": null,
   "stock": 120,
   "file": "photos-new/n26.jpg",
-  "id": 65
+  "id": 65,
+  "daily": false
  },
  {
   "name": "노즈워크 인형 펫버거",
@@ -723,7 +788,8 @@
   "rrp": null,
   "stock": 31,
   "file": "photos-new/n27.jpg",
-  "id": 66
+  "id": 66,
+  "daily": false
  },
  {
   "name": "못잡겠쥐 고양이 낚시대",
@@ -734,7 +800,8 @@
   "rrp": null,
   "stock": 144,
   "file": "photos-new/n28.jpg",
-  "id": 67
+  "id": 67,
+  "daily": false
  },
  {
   "name": "라텍스 삑삑이 토이",
@@ -745,7 +812,8 @@
   "rrp": null,
   "stock": 6,
   "file": "photos-new/n29.jpg",
-  "id": 68
+  "id": 68,
+  "daily": false
  },
  {
   "name": "도자기 2구 보울",
@@ -756,7 +824,8 @@
   "rrp": null,
   "stock": 96,
   "file": "photos-new/n30.jpg",
-  "id": 69
+  "id": 69,
+  "daily": false
  },
  {
   "name": "저소음 반려동물 정수기",
@@ -767,7 +836,8 @@
   "rrp": null,
   "stock": 49,
   "file": "photos-new/n31.jpg",
-  "id": 70
+  "id": 70,
+  "daily": false
  },
  {
   "name": "보들보들 두부모래 2.8kg",
@@ -778,7 +848,8 @@
   "rrp": null,
   "stock": 6,
   "file": "photos-new/n32.jpg",
-  "id": 71
+  "id": 71,
+  "daily": true
  },
  {
   "name": "투명 미끄럼방지 4입",
@@ -789,7 +860,8 @@
   "rrp": null,
   "stock": 7,
   "file": "photos-el/e032.jpg",
-  "id": 72
+  "id": 72,
+  "daily": true
  },
  {
   "name": "세탁기 패드 4입",
@@ -800,7 +872,8 @@
   "rrp": null,
   "stock": 248,
   "file": "photos-el/e034.jpg",
-  "id": 73
+  "id": 73,
+  "daily": true
  },
  {
   "name": "문풍지 사계절 틈새막이 5M",
@@ -811,7 +884,8 @@
   "rrp": null,
   "stock": 184,
   "file": "photos-el/e090.jpg",
-  "id": 74
+  "id": 74,
+  "daily": true
  },
  {
   "name": "케이블 홀더 6입",
@@ -822,7 +896,8 @@
   "rrp": null,
   "stock": 3,
   "file": "photos-el/e114.jpg",
-  "id": 75
+  "id": 75,
+  "daily": false
  },
  {
   "name": "창문 안전 방범클립 2입",
@@ -833,7 +908,8 @@
   "rrp": null,
   "stock": 233,
   "file": "photos-el/e020.jpg",
-  "id": 76
+  "id": 76,
+  "daily": false
  },
  {
   "name": "이지톡 부착패드 중형 8입",
@@ -844,6 +920,187 @@
   "rrp": null,
   "stock": 37,
   "file": "photos-el/e036.jpg",
-  "id": 77
+  "id": 77,
+  "daily": false
+ },
+ {
+  "name": "분리수거 비닐봉투 20L 30입",
+  "brand": "MONOFLAT",
+  "cat": "living",
+  "price": 900,
+  "mall": 1900,
+  "rrp": 2900,
+  "stock": 244,
+  "file": "photos84/p03.jpg",
+  "daily": true,
+  "id": 78
+ },
+ {
+  "name": "쓰레기통 리필봉투",
+  "brand": "MONOFLAT",
+  "cat": "living",
+  "price": 900,
+  "mall": 2500,
+  "rrp": 3000,
+  "stock": 104,
+  "file": "photos84/p05.jpg",
+  "daily": true,
+  "id": 79
+ },
+ {
+  "name": "스트링 쓰레기봉투 30·50·80L",
+  "brand": "MONOFLAT",
+  "cat": "living",
+  "price": 1900,
+  "mall": 13900,
+  "rrp": 17900,
+  "stock": 123,
+  "file": "photos84/p40.jpg",
+  "daily": true,
+  "id": 80
+ },
+ {
+  "name": "고정용 찍찍이 테이프",
+  "brand": "ELTREE",
+  "cat": "living",
+  "price": 900,
+  "mall": null,
+  "rrp": null,
+  "stock": 90,
+  "file": "photos-el/e018.jpg",
+  "daily": true,
+  "id": 81
+ },
+ {
+  "name": "다용도 후크테이프",
+  "brand": "ELTREE",
+  "cat": "living",
+  "price": 900,
+  "mall": null,
+  "rrp": null,
+  "stock": 101,
+  "file": "photos-el/e064.jpg",
+  "daily": true,
+  "id": 82
+ },
+ {
+  "name": "결로방지 물흡수 테이프 4M",
+  "brand": "ELTREE",
+  "cat": "living",
+  "price": 900,
+  "mall": null,
+  "rrp": null,
+  "stock": 89,
+  "file": "photos-el/e094.jpg",
+  "daily": true,
+  "id": 83
+ },
+ {
+  "name": "방충망 보수테이프 4입",
+  "brand": "ELTREE",
+  "cat": "living",
+  "price": 900,
+  "mall": null,
+  "rrp": null,
+  "stock": 250,
+  "file": "photos-el/e083.jpg",
+  "daily": true,
+  "id": 84
+ },
+ {
+  "name": "소프트 엠보 변기시트",
+  "brand": "ELTREE",
+  "cat": "living",
+  "price": 1900,
+  "mall": null,
+  "rrp": null,
+  "stock": 69,
+  "file": "photos-el/e076.jpg",
+  "daily": true,
+  "id": 85
+ },
+ {
+  "name": "아기 열냉각시트 6매",
+  "brand": "AGARD",
+  "cat": "baby",
+  "price": 1900,
+  "mall": null,
+  "rrp": null,
+  "stock": 114,
+  "file": "photos-daily/d01.jpg",
+  "daily": true,
+  "id": 86
+ },
+ {
+  "name": "모기퇴치 썸머패치 27매",
+  "brand": "AGARD",
+  "cat": "baby",
+  "price": 1900,
+  "mall": null,
+  "rrp": null,
+  "stock": 161,
+  "file": "photos-daily/d02.jpg",
+  "daily": true,
+  "id": 87
+ },
+ {
+  "name": "일회용 방수 턱받이 20입",
+  "brand": "AGARD",
+  "cat": "baby",
+  "price": 1900,
+  "mall": null,
+  "rrp": null,
+  "stock": 182,
+  "file": "photos-daily/d03.jpg",
+  "daily": true,
+  "id": 88
+ },
+ {
+  "name": "아기 로션 160g 1+1",
+  "brand": "AGARD",
+  "cat": "baby",
+  "price": 2900,
+  "mall": null,
+  "rrp": null,
+  "stock": 196,
+  "file": "photos-daily/d04.jpg",
+  "daily": true,
+  "id": 89
+ },
+ {
+  "name": "생분해 배변봉투 10입",
+  "brand": "PETRIUM",
+  "cat": "pet",
+  "price": 900,
+  "mall": null,
+  "rrp": null,
+  "stock": 100,
+  "file": "photos-daily/d05.jpg",
+  "daily": true,
+  "id": 90
+ },
+ {
+  "name": "반려동물 정수기 필터 10입",
+  "brand": "PETRIUM",
+  "cat": "pet",
+  "price": 2900,
+  "mall": null,
+  "rrp": null,
+  "stock": 77,
+  "file": "photos-daily/d06.jpg",
+  "daily": true,
+  "id": 91
+ },
+ {
+  "name": "고흡수 배변패드 소형 50입",
+  "brand": "PETRIUM",
+  "cat": "pet",
+  "price": 2900,
+  "mall": null,
+  "rrp": null,
+  "stock": 182,
+  "file": "photos-daily/d07.jpg",
+  "daily": true,
+  "id": 92
  }
 ]
